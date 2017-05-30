@@ -42,7 +42,7 @@ public class SQLiteManager extends DatabaseManager {
 		String fs = System.getProperty("file.separator");
 		String dirPath = System.getProperty("user.dir") + fs + "db"+ fs + "bank";
 		File dir = new File(dirPath);
-		if (!(dir.exists() && dir.isDirectory())) { // NOT (A && B) = NOT A || NOT B
+		if (!(dir.exists() && dir.isDirectory())) { 
 			dir.mkdirs();
 		}
 		

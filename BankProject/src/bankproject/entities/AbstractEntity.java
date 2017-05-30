@@ -1,5 +1,5 @@
 package bankproject.entities;
 
-public class GeneralEntities {
+public class AbstractEntity {
 
 }

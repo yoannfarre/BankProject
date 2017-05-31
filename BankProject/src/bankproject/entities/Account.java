@@ -3,9 +3,13 @@ package bankproject.entities;
 import bankproject.enumerations.CountryEnum;
 
 public class Account {
+	
 
-	String number;
-	Customer customer;
+	private Integer id;
+	private String number;
+	private Customer customer;
+	private Double summary;
+	private CountryEnum Country;
 
 //	public static void main(String[] args) throws SQLException {
 //

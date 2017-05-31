@@ -19,7 +19,7 @@ public class SrvCustomer extends AbstractService {
 	 * 
 	 */
 	private SrvCustomer () {
-		setEntitySqlTable("customer");
+		setEntitySqlTable("Customer");
 	}
 	
 	/**

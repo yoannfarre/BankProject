@@ -4,7 +4,7 @@ import java.sql.Date;
 
 import bankproject.enumerations.TypeOperationEnum;
 
-public class Operation {
+public class Operation extends AbstractEntity {
 
 	private Integer id;
 	private Double amount;

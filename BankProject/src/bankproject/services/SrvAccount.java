@@ -132,10 +132,10 @@ public class SrvAccount extends AbstractService {
 		StringBuilder sb = new StringBuilder();
 		sb.append("CREATE TABLE IF NOT EXISTS Account ( ");
 		sb.append("id INTEGER PRIMARY KEY AUTOINCREMENT, ");
-		sb.append("country VARCHAR(30) NOT NULL ");
-		sb.append("number VARCHAR(30) NOT NULL ");
-		sb.append("customer_id INTEGER NOT NULL ");
-		sb.append("summary DOUBLE NOT NULL, ");
+		sb.append("country VARCHAR(30) NOT NULL, ");
+		sb.append("number VARCHAR(30) NOT NULL, ");
+		sb.append("customer_id INTEGER NOT NULL, ");
+		sb.append("summary DOUBLE NOT NULL ");
 		sb.append(")");
 
 		return sb.toString();

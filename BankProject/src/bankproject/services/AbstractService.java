@@ -155,4 +155,6 @@ public abstract class AbstractService {
 	public void setDbManager(DatabaseManager dbManager) {
 		this.dbManager = dbManager;
 	}
+
+	public abstract String createTableInDB();
 }

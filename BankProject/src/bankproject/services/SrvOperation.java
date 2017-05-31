@@ -20,4 +20,10 @@ public class SrvOperation extends AbstractService {
 		return null;
 	}
 
+	@Override
+	public String createTableInDB() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

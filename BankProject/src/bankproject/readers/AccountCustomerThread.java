@@ -23,6 +23,8 @@ public class AccountCustomerThread extends Thread {
 	}
 
 	public void run() {
+		
+		while (true) { // TODO Ajouter une condition de sortie
 
 		
 		File file_account_customer = new File(getFileAPath());
@@ -66,6 +68,13 @@ public class AccountCustomerThread extends Thread {
 			System.err.println("# Error on deleting \"" + file_account_customer.getName() + "\".");
 			System.exit(1);
 		}
+		
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException ie) {
+			continue; // Recommencer en début de boucle
+		}
+	}
 
 	}
 

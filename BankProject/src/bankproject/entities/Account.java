@@ -11,7 +11,7 @@ public class Account {
 	private Double summary;
 	private CountryEnum Country;
 
-//	public static void main(String[] args) throws SQLException {
+//	public static void main(String[] args) {
 //
 //		String str = buildNumber(CountryEnum.BRITAIN);
 //		System.out.println(str);

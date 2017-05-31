@@ -6,6 +6,8 @@ public class Customer extends AbstractEntity {
 	private String firstname;
 	private String lastname;
 	
+	
+	
 	/**
 	 * @return the id
 	 */

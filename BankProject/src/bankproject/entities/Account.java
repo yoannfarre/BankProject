@@ -110,13 +110,25 @@ public class Account extends AbstractEntity {
 		case "NEDERLANDS":
 			this.country = CountryEnum.NEDERLANDS;
 			break;
+		case "PAYS-BAS":
+			this.country = CountryEnum.NEDERLANDS;
+			break;
 		case "GERMANY":
+			this.country = CountryEnum.GERMANY;
+			break;
+		case "ALLEMAGNE":
 			this.country = CountryEnum.GERMANY;
 			break;
 		case "BELGIUM":
 			this.country = CountryEnum.BELGIUM;
 			break;
+		case "BELGIQUE":
+			this.country = CountryEnum.BELGIUM;
+			break;
 		case "BRITAIN":
+			this.country = CountryEnum.BRITAIN;
+			break;
+		case "GRANDE-BRETAGNE":
 			this.country = CountryEnum.BRITAIN;
 			break;
 		}

@@ -9,6 +9,7 @@ import bankproject.services.AbstractService;
 import bankproject.services.SQLiteManager;
 import bankproject.services.SrvAccount;
 import bankproject.services.SrvCustomer;
+import bankproject.services.SrvOperation;
 
 public class Main {
 
@@ -25,8 +26,11 @@ public class Main {
 		srvAccount.setDbManager(SQLiteManager.getInstance());
 		services_list.add(srvAccount);
 		
+		SrvOperation srvOperation = SrvOperation.getInstance();
+		srvOperation.setDbManager(SQLiteManager.getInstance());
+		services_list.add(srvOperation);
+		
 		Connection connection;
-		int i;
 		
 		for (AbstractService as : services_list){
 		

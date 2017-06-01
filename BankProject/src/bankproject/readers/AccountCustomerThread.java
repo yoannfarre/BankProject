@@ -55,6 +55,8 @@ public class AccountCustomerThread extends Thread {
 				System.exit(1);
 			}
 
+			// Partie lecture du fichier
+
 			while (true) {
 				String ligne = null;
 				try {
@@ -117,6 +119,8 @@ public class AccountCustomerThread extends Thread {
 				System.exit(1);
 			}
 
+			// Partie remplissage de base
+
 			// Remplissage BDD Table Customer
 
 			SrvCustomer srvCustomer = SrvCustomer.getInstance();
@@ -128,6 +132,17 @@ public class AccountCustomerThread extends Thread {
 			for (Customer customer : customer_set) {
 
 				if (customer.getFirstname() != null && customer.getLastname() != null) {
+
+					// Vérification de l'existence du Customer en BDD
+
+					try {
+
+						int id = srvCustomer.get(customer.getFirstname(), customer.getLastname()).getId();
+
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 
 					// Sauvegarde du customer
 
@@ -144,7 +159,9 @@ public class AccountCustomerThread extends Thread {
 					// Récupération de la nouvelle id créée
 
 					try {
-						srvCustomer.get(customer.getFirstname(), customer.getLastname());
+
+						customer.setId(srvCustomer.get(customer.getFirstname(), customer.getLastname()).getId());
+
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -158,6 +175,7 @@ public class AccountCustomerThread extends Thread {
 
 						String number_ = account.buildNumber(account.getCountry());
 						account.setNumber(number_);
+
 						account.setCustomer_id(customer.getId());
 
 						try {
@@ -178,11 +196,8 @@ public class AccountCustomerThread extends Thread {
 
 			// Suppression du fichier
 			// TODO Réactiver la suppression quand les tests seront terminés
-			// if (!file_account_customer.delete()) {
-			// System.err.println("# Error on deleting \"" +
-			// file_account_customer.getName() + "\".");
-			// System.exit(1);
-			// }
+
+			// deleteFile(file_account_customer);
 
 			try {
 				Thread.sleep(time);
@@ -204,4 +219,13 @@ public class AccountCustomerThread extends Thread {
 
 		return dirPath + fs + "account_customer.txt";
 	}
+
+	public void deleteFile(File file) {
+
+		if (!file.delete()) {
+			System.err.println("# Error on deleting \"" + file.getName() + "\".");
+			System.exit(1);
+		}
+	}
+
 }

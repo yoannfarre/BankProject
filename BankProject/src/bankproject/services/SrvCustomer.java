@@ -171,7 +171,6 @@ public class SrvCustomer extends AbstractService {
 			
 
 		}
-		System.out.print(result.getId());
 		return result;
 		
 	}

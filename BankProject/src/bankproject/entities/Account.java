@@ -20,7 +20,7 @@ public class Account extends AbstractEntity {
 		System.out.println(account.getCustomer_id());
 	}
 
-	public static String buildNumber(CountryEnum country) {
+	public String buildNumber(CountryEnum country) {
 
 		StringBuilder sb = new StringBuilder();
 		int digit, i;

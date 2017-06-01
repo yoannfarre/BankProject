@@ -54,12 +54,14 @@ public class SrvAccount extends AbstractService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			if (connection != null) {
-				connection.close();
-			}
+
 
 			if (ps != null) {
 				ps.close();
+			}
+			
+			if (connection != null) {
+				connection.close();
 			}
 		}
 	}
@@ -91,12 +93,14 @@ public class SrvAccount extends AbstractService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			if (connection != null) {
-				connection.close();
-			}
+
 
 			if (ps != null) {
 				ps.close();
+			}
+			
+			if (connection != null) {
+				connection.close();
 			}
 		}
 	}

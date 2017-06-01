@@ -6,13 +6,15 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.StringTokenizer;
 
 import bankproject.entities.Account;
 import bankproject.entities.Customer;
 import bankproject.exceptions.SrvException;
 import bankproject.services.SQLiteManager;
+import bankproject.services.SrvAccount;
 import bankproject.services.SrvCustomer;
 
 public class AccountCustomerThread extends Thread {
@@ -36,9 +38,10 @@ public class AccountCustomerThread extends Thread {
 		while (true) { // TODO Ajouter une condition de sortie
 
 			File file_account_customer = new File(getFileAPath());
-			HashSet<Customer> customer_set = new HashSet<Customer>();
-			HashSet<Account> account_set = new HashSet<Account>();
-			
+
+			LinkedHashMap<Customer, Account> customer_account_map = new LinkedHashMap<>();
+			LinkedHashSet<Customer> customer_set = new LinkedHashSet<>();
+
 			if (!file_account_customer.exists()) {
 				System.err.println("# Error : \"" + file_account_customer.getName() + "\" n'existe pas.");
 				System.exit(1);
@@ -101,29 +104,9 @@ public class AccountCustomerThread extends Thread {
 
 					count++;
 				}
-				
+
 				customer_set.add(customer);
-				account_set.add(account);
-//				System.out.println(account.getSummary());
-//				System.out.println(account.getCountry());
-//				
-//				System.out.println(customer.getFullName());
-//				
-//				SrvCustomer srvCustomer = SrvCustomer.getInstance();
-//				srvCustomer.setDbManager(SQLiteManager.getInstance());
-//				
-////				Connection connection = srvCustomer.getDbManager().getConnection();
-//				
-//				try {
-//					srvCustomer.save(customer);
-//				} catch (SrvException | SQLException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				
-////				SrvAccount srvAccount = SrvAccount.getInstance();
-////				srvAccount.setDbManager(SQLiteManager.getInstance());
-				
+				customer_account_map.put(customer, account);
 
 			}
 
@@ -133,14 +116,20 @@ public class AccountCustomerThread extends Thread {
 				System.err.println("# Error on closing \"" + file_account_customer + "\".");
 				System.exit(1);
 			}
-			
+
+			// Remplissage BDD Table Customer
+
 			SrvCustomer srvCustomer = SrvCustomer.getInstance();
 			srvCustomer.setDbManager(SQLiteManager.getInstance());
-			
-//			Connection connection = srvCustomer.getDbManager().getConnection();
-			
-			for (Customer customer : customer_set){
-				
+
+			SrvAccount srvAccount = SrvAccount.getInstance();
+			srvAccount.setDbManager(SQLiteManager.getInstance());
+
+			for (Customer customer : customer_set) {
+
+				if (customer.getFirstname() != null && customer.getLastname() != null) {
+
+					// Sauvegarde du customer
 
 					try {
 						srvCustomer.save(customer);
@@ -152,9 +141,40 @@ public class AccountCustomerThread extends Thread {
 						e.printStackTrace();
 					}
 
-			}
-			
+					// Récupération de la nouvelle id créée
 
+					try {
+						srvCustomer.get(customer.getFirstname(), customer.getLastname());
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+
+					// Remplissage BDD Table Account avec id correspondant
+
+					Account account = customer_account_map.get(customer);
+
+					if (account.getCountry() != null) {
+
+						String number_ = account.buildNumber(account.getCountry());
+						account.setNumber(number_);
+						account.setCustomer_id(customer.getId());
+
+						try {
+							srvAccount.save(account);
+						} catch (SrvException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+					}
+
+				}
+
+			}
 
 			// Suppression du fichier
 			// TODO Réactiver la suppression quand les tests seront terminés
@@ -163,8 +183,6 @@ public class AccountCustomerThread extends Thread {
 			// file_account_customer.getName() + "\".");
 			// System.exit(1);
 			// }
-			
-
 
 			try {
 				Thread.sleep(time);

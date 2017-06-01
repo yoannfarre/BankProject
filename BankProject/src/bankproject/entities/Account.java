@@ -3,13 +3,20 @@ package bankproject.entities;
 import bankproject.enumerations.CountryEnum;
 
 public class Account extends AbstractEntity {
-	
 
+	/********************************
+	 ********** Attributes **********
+	 ********************************/
+	
 	private Integer id;
 	private String number;
 	private Integer customer_id;
 	private Double summary;
 	private CountryEnum country;
+	
+	/********************************
+	 ********** Test Main  **********
+	 ********************************/
 
 	public static void main(String[] args) {
 
@@ -77,7 +84,7 @@ public class Account extends AbstractEntity {
 		return customer_id;
 	}
 
-	public void setCustomer_id (Integer customer_) {
+	public void setCustomer_id(Integer customer_) {
 		this.customer_id = customer_;
 	}
 
@@ -96,9 +103,9 @@ public class Account extends AbstractEntity {
 	public void setCountry(CountryEnum country_) {
 		country = country_;
 	}
-	
+
 	public void setCountry(String country_) {
-		
+
 		switch (country_) {
 
 		case "SPAIN":
@@ -132,7 +139,7 @@ public class Account extends AbstractEntity {
 			this.country = CountryEnum.BRITAIN;
 			break;
 		}
-		
+
 	}
 
 }

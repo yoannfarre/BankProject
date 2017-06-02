@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class OperationThread extends AbstractReaderThread {
+public class OperationThread extends Thread {
 
 	int time = 60000 * 11; // 11 minutes
 

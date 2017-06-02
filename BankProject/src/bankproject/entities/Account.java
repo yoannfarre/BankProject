@@ -105,6 +105,8 @@ public class Account extends AbstractEntity {
 	}
 
 	public void setCountry(String country_) {
+		
+		// TODO On doit pouvoir faire mieux en intégrant les différentes possibilités à CountryEnum 
 
 		switch (country_) {
 

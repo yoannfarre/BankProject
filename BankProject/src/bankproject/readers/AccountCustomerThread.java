@@ -17,7 +17,7 @@ import bankproject.services.SQLiteManager;
 import bankproject.services.SrvAccount;
 import bankproject.services.SrvCustomer;
 
-public class AccountCustomerThread extends Thread {
+public class AccountCustomerThread extends AbstractReaderThread {
 
 	int time = 60000 * 7; // 7 minutes
 
@@ -76,14 +76,20 @@ public class AccountCustomerThread extends Thread {
 				Customer customer = new Customer();
 				Account account = new Account();
 				int count = 0;
+				boolean firstlineboolean = false;
 
 				while (st.hasMoreTokens()) {
 
 					String field = st.nextToken();
 
 					// Saute la première ligne
-					if (field.equals("Pays")) {
-						break;
+					
+					//  TODO Travailler evec l'Enum des mots de première ligne pour simplifier le code
+					
+					if (field.equals("Pays") || field.equals("Nom") || field.equals("Prenom")
+							|| field.equals("Somme")) {
+						firstlineboolean = true;
+						continue;
 					} else {
 
 						switch (count) {
@@ -107,8 +113,11 @@ public class AccountCustomerThread extends Thread {
 					count++;
 				}
 
-				customer_set.add(customer);
-				customer_account_map.put(customer, account);
+				if (firstlineboolean == false) {
+
+					customer_set.add(customer);
+					customer_account_map.put(customer, account);
+				}
 
 			}
 
@@ -134,14 +143,18 @@ public class AccountCustomerThread extends Thread {
 				if (customer.getFirstname() != null && customer.getLastname() != null) {
 
 					// Vérification de l'existence du Customer en BDD
+					boolean existcustomer = true;
 
 					try {
 
 						int id = srvCustomer.get(customer.getFirstname(), customer.getLastname()).getId();
-
+						customer.setId(id);
+						// TODO Rajouter une condition pour vérifier si int est
+						// null ou non
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						existcustomer = false;
+						System.out.println("Super, un nouveau client!");
 					}
 
 					// Sauvegarde du customer
@@ -156,15 +169,18 @@ public class AccountCustomerThread extends Thread {
 						e.printStackTrace();
 					}
 
-					// Récupération de la nouvelle id créée
+					// Récupération de la nouvelle id créée si besoin
 
-					try {
+					if (existcustomer == false) {
 
-						customer.setId(srvCustomer.get(customer.getFirstname(), customer.getLastname()).getId());
+						try {
 
-					} catch (Exception e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+							customer.setId(srvCustomer.get(customer.getFirstname(), customer.getLastname()).getId());
+
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 					}
 
 					// Remplissage BDD Table Account avec id correspondant
@@ -174,6 +190,11 @@ public class AccountCustomerThread extends Thread {
 					if (account.getCountry() != null) {
 
 						String number_ = account.buildNumber(account.getCountry());
+						
+						// TODO Rajouter une condition pour vérifier si le numéro existe déjà dans la base
+						// Il faut récupérer tous les numéros de compte pour voir
+						// Faire une boucle pour essayer de créer un numéro de compte jusqu'à ce qu'il soit valide
+						
 						account.setNumber(number_);
 
 						account.setCustomer_id(customer.getId());

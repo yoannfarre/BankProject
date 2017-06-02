@@ -6,13 +6,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class OperationThread extends Thread {
+public class OperationThread extends AbstractReaderThread {
 
 	int time = 60000 * 11; // 11 minutes
 
 	public static void main(String[] args) {
 
-		OperationThread act = new OperationThread("A");
+		OperationThread act = new OperationThread("B");
 	}
 
 	public OperationThread(String name) {
@@ -60,6 +60,8 @@ public class OperationThread extends Thread {
 				System.err.println("# Error on closing \"" + file_account_customer + "\".");
 				System.exit(1);
 			}
+			
+			
 
 			// Suppression du fichier
 			if (!file_account_customer.delete()) {

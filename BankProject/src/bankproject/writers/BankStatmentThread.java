@@ -13,7 +13,7 @@ public class BankStatmentThread extends Thread {
 
 	public static void main(String[] args) {
 
-		BankStatmentThread act = new BankStatmentThread("A");
+		BankStatmentThread act = new BankStatmentThread("C");
 	}
 
 	public BankStatmentThread(String name) {
@@ -48,11 +48,19 @@ public class BankStatmentThread extends Thread {
 					System.err.println("# Error on creating \"" + it.next() + "\".");
 					System.exit(1);
 				}
+				
+				
+				
+				
+				
 
 				for (int i = 0; i < 10; i++) {
 					output.println(Integer.toString(i) + ": ");
 				}
 
+				
+				
+				
 				output.close();
 				if (output.checkError()) {
 					System.err.println("# Error : file \"" + it.next() + "\" incorreclty registered.");

@@ -69,12 +69,14 @@ public abstract class AbstractService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			if (connexion != null) {
-				connexion.close();
-			}
+
 			
 			if (pst != null) {
 				pst.close();
+			}
+			
+			if (connexion != null) {
+				connexion.close();
 			}
 		}
 		
@@ -119,12 +121,14 @@ public abstract class AbstractService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			if (connexion != null) {
-				connexion.close();
-			}
+
 			
 			if (st != null) {
 				st.close();
+			}
+			
+			if (connexion != null) {
+				connexion.close();
 			}
 		}
 		

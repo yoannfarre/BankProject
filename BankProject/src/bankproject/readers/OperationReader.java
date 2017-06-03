@@ -32,16 +32,16 @@ public class OperationReader extends AbstractReader {
 	public String getFileInputPath() {
 
 		String dirPath = getFileInputPrimaryPath() + "operation.txt";
-		System.out.println(dirPath);
-
-		File dir = new File(dirPath);
-
-		System.out.println(dir.getName());
-
-		if (!(dir.exists() && dir.isDirectory())) {
-			dir.mkdirs();
-			System.err.println("# Error : \"" + dir.getName() + "\" n'existe pas.");
-		}
+//		System.out.println(dirPath);
+//
+//		File dir = new File(dirPath);
+//
+//		System.out.println(dir.getName());
+//
+//		if (!(dir.exists() && dir.isDirectory())) {
+//			dir.mkdirs();
+//			System.err.println("# Error : \"" + dir.getName() + "\" n'existe pas.");
+//		}
 
 		return dirPath;
 

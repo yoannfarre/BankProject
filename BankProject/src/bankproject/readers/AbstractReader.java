@@ -55,7 +55,7 @@ public abstract class AbstractReader extends Thread {
 		// Suppression du fichier
 		// TODO Réactiver la suppression quand les tests seront terminés
 
-		// deleteFile(file);
+		 deleteFile(file);
 
 	}
 

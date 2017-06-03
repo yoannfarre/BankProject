@@ -48,7 +48,7 @@ public class SrvOperation extends AbstractService {
 			ps.setString(2, entity.getType_operation().toString());
 			ps.setString(3, entity.getAccount_id().toString());
 			ps.setString(4, entity.getCustomer_id().toString());
-			ps.setString(5, entity.getDate().toString());
+			ps.setString(5, entity.getDate());
 			
 			//(id, amount, type_operation, account_id, customer_id, date)
 
@@ -58,12 +58,14 @@ public class SrvOperation extends AbstractService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			if (connection != null) {
-				connection.close();
-			}
+
 
 			if (ps != null) {
 				ps.close();
+			}
+			
+			if (connection != null) {
+				connection.close();
 			}
 		}
 	}
@@ -89,7 +91,7 @@ public class SrvOperation extends AbstractService {
 			ps.setString(2, entity.getType_operation().toString());
 			ps.setString(3, entity.getAccount_id().toString());
 			ps.setString(4, entity.getCustomer_id().toString());
-			ps.setString(5, entity.getDate().toString());
+			ps.setString(5, entity.getDate());
 			ps.setInt(6, entity.getId());
 			
 			ps.execute();
@@ -116,7 +118,7 @@ public class SrvOperation extends AbstractService {
 		operation.setAmount(rs.getDouble("amount")); 
 		operation.setType_operation(rs.getString("type_operation"));
 		operation.setCustomer_id(rs.getInt("customer_id"));
-		operation.setDate(rs.getDate("date"));
+		operation.setDate(rs.getString("date"));
 
 		return operation;
 	}
@@ -143,7 +145,7 @@ public class SrvOperation extends AbstractService {
 		sb.append("type_operation VARCHAR(10) NOT NULL, ");
 		sb.append("account_id INTEGER NOT NULL, ");
 		sb.append("customer_id INTEGER NOT NULL, ");
-		sb.append("date DATE NOT NULL ");
+		sb.append("date TEXT NOT NULL ");
 		sb.append(")");
 
 		return sb.toString();

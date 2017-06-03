@@ -1,8 +1,7 @@
 package bankproject.entities;
 
-import java.sql.Date;
+import java.util.Date;
 
-import bankproject.enumerations.CountryEnum;
 import bankproject.enumerations.TypeOperationEnum;
 
 public class Operation extends AbstractEntity {
@@ -12,7 +11,7 @@ public class Operation extends AbstractEntity {
 	private TypeOperationEnum type_operation;
 	private Integer account_id;
 	private Integer customer_id;
-	private Date date;
+	private String date;
 
 	public Integer getId() {
 		return id;
@@ -67,11 +66,11 @@ public class Operation extends AbstractEntity {
 		this.customer_id = customer_id;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 

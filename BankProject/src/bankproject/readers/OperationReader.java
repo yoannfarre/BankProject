@@ -2,6 +2,9 @@ package bankproject.readers;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.StringTokenizer;
@@ -10,6 +13,7 @@ import bankproject.entities.Account;
 import bankproject.entities.Customer;
 import bankproject.entities.Operation;
 import bankproject.enumerations.TypeOperationEnum;
+import bankproject.exceptions.SrvException;
 import bankproject.services.SQLiteManager;
 import bankproject.services.SrvAccount;
 import bankproject.services.SrvCustomer;
@@ -172,92 +176,96 @@ public class OperationReader extends AbstractReader {
 			// LinkedHashMap<Account, Operation> account_operation_map = new
 			// LinkedHashMap<>();
 			// LinkedHashSet<Customer> customer_set = new LinkedHashSet<>();
-			
+
 			// Verifier si le compte existe et récuperation ID
+
+			// TODO : il faudrait vérifier que le compte appartient eu bon
+			// Customer
+
+			boolean existaccount = false;
 
 			if (account.getNumber() != null) {
 
-				boolean existaccount = true;
-
 				try {
-					
+
 					Account account_up = srvAccount.get(account.getNumber());
-//					account.setCustomer_id(customer_);
-//					int id = srvAccount.get(account.getNumber()).getId();
-//					account.setId(id);
-					
+					account.setId(account_up.getId());
+					account.setSummary(account_up.getSummary());
+					account.setCountry(account_up.getCountry());
+					account.setCustomer_id(account_up.getCustomer_id());
+					existaccount = true;
 
 				} catch (Exception e1) {
 					existaccount = false;
-					System.out.println("Le compte" + account.getNumber() + "n'existe pas"); 
-					
+					System.out.println("Le compte " + account.getNumber() + " n'existe pas");
+
 					// TODO Il faut sortir de la boucle
+					continue;
 				}
 
 			}
 
-			// Sauvegarde du customer
+			// Mise à jour du compte
 
-			// try {
-			// srvCustomer.save(customer);
-			// } catch (SrvException e) {
-			// // TODO Auto-generated catch block
-			// e.printStackTrace();
-			// } catch (SQLException e) {
-			// // TODO Auto-generated catch block
-			// e.printStackTrace();
-			// }
+			if (existaccount == true) {
 
-			// Récupération de la nouvelle id créée si besoin
+				double sum = account.getSummary();
 
-			// if (existcustomer == false) {
-			//
-			// try {
-			//
-			// customer.setId(srvCustomer.get(customer.getFirstname(),
-			// customer.getLastname()).getId());
-			//
-			// } catch (Exception e1) {
-			// // TODO Auto-generated catch block
-			// e1.printStackTrace();
-			// }
-			// }
+				if (account_operation_map.get(account).getType_operation() == TypeOperationEnum.DEBIT) {
+					account.setSummary(sum - account_operation_map.get(account).getAmount());
+				}
 
-			// Remplissage BDD Table Account avec id correspondant
+				else if (account_operation_map.get(account).getType_operation() == TypeOperationEnum.CREDIT) {
+					account.setSummary(sum + account_operation_map.get(account).getAmount());
+				}
 
-			// Account account = customer_account_map.get(customer);
+				try {
+					srvAccount.save(account);
+				} catch (SrvException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
-			// if (account.getCountry() != null) {
-			//
-			// String number_ = account.buildNumber(account.getCountry());
-			//
-			// // TODO Rajouter une condition pour vérifier si le numéro
-			// // existe déjà dans la base
-			// // Il faut récupérer tous les numéros de compte pour voir
-			// // Faire une boucle pour essayer de créer un numéro de
-			// // compte jusqu'à ce qu'il soit valide
-			//
-			// account.setNumber(number_);
-			//
-			// account.setCustomer_id(customer.getId());
-			//
-			// try {
-			// srvAccount.save(account);
-			// } catch (SrvException e) {
-			// // TODO Auto-generated catch block
-			// e.printStackTrace();
-			// } catch (SQLException e) {
-			// // TODO Auto-generated catch block
-			// e.printStackTrace();
-			// }
-			//
-			// }
+			}
 
-			// }
-			//
-			// }
+			// Création de l'opération dans DB
 
+			if (existaccount == true) { // même condition que précédemment
+
+				Operation operation = account_operation_map.get(account);
+				Date date = new Date();
+
+				SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+
+				//System.out.println("Current Date: " + ft.format(date));
+
+				operation.setAccount_id(account.getId());
+				operation.setCustomer_id(account.getCustomer_id());
+				operation.setDate(ft.format(date));
+
+
+				
+				 try {
+				 srvOperation.save(operation);
+				 } catch (SrvException e) {
+				 // TODO Auto-generated catch block
+				 e.printStackTrace();
+				 } catch (SQLException e) {
+				 // TODO Auto-generated catch block
+				 e.printStackTrace();
+				 }
+				//
+				// }
+
+				// }
+				//
+				// }
+
+			}
 		}
-	}
 
+	}
 }

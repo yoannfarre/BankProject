@@ -1,18 +1,15 @@
 package bankproject;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import bankproject.enumerations.CountryEnum;
 import bankproject.services.AbstractService;
 import bankproject.services.SQLiteManager;
 import bankproject.services.SrvAccount;
 import bankproject.services.SrvCustomer;
 import bankproject.services.SrvOperation;
-import bankproject.services.SrvOverhead;
 
 public class Main {
 
@@ -31,9 +28,6 @@ public class Main {
 		SrvOperation srvOperation = SrvOperation.getInstance();
 		srvOperation.setDbManager(SQLiteManager.getInstance());
 		services_list.add(srvOperation);
-
-//		SrvOverhead srvOverhead = SrvOverhead.getInstance();
-//		srvOverhead.setDbManager(SQLiteManager.getInstance());
 
 		Connection connection;
 

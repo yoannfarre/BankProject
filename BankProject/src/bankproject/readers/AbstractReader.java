@@ -6,17 +6,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public abstract class AbstractReader extends Thread {
+public abstract class AbstractReader extends Thread { 
 	
 	File file;
 	BufferedReader input = null;
 
 	public AbstractReader() {
-		
-		
-		this.input = null;
-		this.file = new File(getFileInputPath());
-		this.readFile();
 
 	}
 

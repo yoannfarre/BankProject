@@ -14,11 +14,14 @@ import bankproject.services.SQLiteManager;
 import bankproject.services.SrvAccount;
 import bankproject.services.SrvCustomer;
 
-public class AccountCustomerReader extends AbstractReader {
+public class AccountCustomerReader extends AbstractReader { // TODO Corriger Erreur sur la méthode getFileInputPath()
 
 	public AccountCustomerReader() {
 
-		super();
+		this.input = null;
+		this.file = new File(getFileInputPath());
+		readFile();
+//		
 	}
 
 	public String getFileInputPath() {
@@ -26,20 +29,22 @@ public class AccountCustomerReader extends AbstractReader {
 		String dirPath = getFileInputPrimaryPath() + "account_customer.txt";
 		System.out.println(dirPath);
 
-		File dir = new File(dirPath);
-
-		System.out.println(dir.getName());
-
-		if (!(dir.exists() && dir.isDirectory())) {
-			dir.mkdirs();
-			System.err.println("# Error : \"" + dir.getName() + "\" n'existe pas. Test");
-		}
+//		File dir = new File(dirPath);
+//
+//		System.out.println(dir.getName());
+//
+//		if (!(dir.exists() && dir.isDirectory())) {
+//			dir.mkdirs();
+//			System.err.println("# Error : \"" + dir.getName() + "\" n'existe pas. Test");
+//		}
 
 		return dirPath;
 
 	}
 
 	public void readSpecificFile() {
+		
+
 
 		LinkedHashMap<Customer, Account> customer_account_map = new LinkedHashMap<>();
 		LinkedHashSet<Customer> customer_set = new LinkedHashSet<>();

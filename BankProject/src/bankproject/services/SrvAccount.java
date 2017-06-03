@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import bankproject.entities.AbstractEntity;
 import bankproject.entities.Account;
+import bankproject.entities.Customer;
 import bankproject.exceptions.SrvException;
 
 public class SrvAccount extends AbstractService {
@@ -143,6 +144,45 @@ public class SrvAccount extends AbstractService {
 		sb.append(")");
 
 		return sb.toString();
+	}
+
+public Account get(String number_) throws Exception {
+		
+		Connection connexion = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		Account result = null;
+		
+		StringBuilder query = new StringBuilder("SELECT * FROM ");
+		query.append(getEntitySqlTable());
+		query.append(" WHERE (number = ?)");
+		
+		try {
+			connexion = getDbManager().getConnection();
+			pst = connexion.prepareStatement(query.toString());
+			pst.setString(1, number_);
+			rs = pst.executeQuery();
+			
+			while (rs.next()) {
+				result = populateEntity(rs);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			
+			if (pst != null) {
+				pst.close();
+			}
+			
+			if (connexion != null) {
+				connexion.close();
+			}
+			
+
+		}
+		return result;
+		
 	}
 	
 	//(id, country, number, customer_id, summary)

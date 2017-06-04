@@ -12,9 +12,9 @@ public abstract class AbstractWriter {
 
 	public AbstractWriter() {
 
-		this.output = null;
-		this.file = new File(getFileOutputPath());
-		this.createFile();
+//		this.output = null;
+//		this.file = new File(getFileOutputPath());
+//		this.createFile();
 
 	}
 

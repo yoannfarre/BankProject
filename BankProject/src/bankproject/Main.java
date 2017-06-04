@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import bankproject.readers.AccountCustomerThread;
 import bankproject.readers.OperationThread;
@@ -13,6 +14,7 @@ import bankproject.services.SrvAccount;
 import bankproject.services.SrvCustomer;
 import bankproject.services.SrvOperation;
 import bankproject.writers.BankStatmentThread;
+import bankproject.writers.CustomerStatementThread;
 
 public class Main {
 
@@ -49,7 +51,7 @@ public class Main {
 		
 		BankStatmentThread bst = new BankStatmentThread("C");
 
-
+		CustomerStatementThread cst = new CustomerStatementThread("D");
 		
 		
 

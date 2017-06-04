@@ -13,7 +13,9 @@ public class FileCountryWriter extends AbstractWriter {
 
 	public FileCountryWriter() {
 
-		super();
+		output = null;
+		file = new File(getFileOutputPath());
+		createFile();
 	}
 
 	public String getFileOutputPath() {

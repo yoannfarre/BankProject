@@ -14,7 +14,9 @@ public class FileCreditorsWriter extends AbstractWriter {
 
 	public FileCreditorsWriter() {
 
-		super();
+		output = null;
+		file = new File(getFileOutputPath());
+		createFile();
 	}
 
 	public String getFileOutputPath() {
@@ -40,8 +42,6 @@ public class FileCreditorsWriter extends AbstractWriter {
 		// Operation.date, Operation.amount, Operation.type_operation,
 		// Account.country, Account.number,
 		// Account.summary, Customer.firstname, Customer.lastname
-
-//		for (CountryEnum country : CountryEnum.values()) {
 		
 		TypeOperationEnum type = TypeOperationEnum.CREDIT;
 

@@ -13,7 +13,9 @@ public class FileDebitorsWriter extends AbstractWriter {
 
 	public FileDebitorsWriter() {
 
-		super();
+		output = null;
+		file = new File(getFileOutputPath());
+		createFile();
 	}
 
 	public String getFileOutputPath() {

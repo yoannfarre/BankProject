@@ -31,24 +31,6 @@ public class SrvStatement extends AbstractService {
 		return null;
 	}
 
-	// public static void main(String[] args) {
-	//
-	// ResultSet rs =null;
-	//
-	// try {
-	// rs = requestStatementsByCountry(CountryEnum.FRANCE);
-	// } catch (SQLException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	//
-	// System.out.println(rs.toString());
-	//
-	// }
-	// query.append("Operation.date, Operation.amount, ");
-	// query.append("Operation.type_operation, Account.number, ");
-	// query.append("Account.summary, Customer.firstname, Customer.lastname ");
-
 	protected Statement populateEntity(ResultSet rs) throws SQLException {
 		Statement statement = new Statement();
 		statement.setDate(rs.getString("date"));
@@ -150,5 +132,51 @@ public class SrvStatement extends AbstractService {
 
 		return results;
 	}
+	
+	public Collection<Statement> requestStatementsCustomer(String firstname, String lastname) throws Exception {
+
+		Connection connexion = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		Collection<Statement> results = new HashSet<>();
+
+		StringBuilder query = new StringBuilder("SELECT ");
+		query.append("Operation.date, Operation.amount, ");
+		query.append("Operation.type_operation, Account.country, Account.number, ");
+		query.append("Account.summary, Customer.firstname, Customer.lastname ");
+		query.append("FROM Operation ");
+		query.append("INNER JOIN Account ON Account.id = Operation.account_id ");
+		query.append("INNER JOIN Customer ON Customer.id = Operation.customer_id ");
+		query.append("WHERE (Customer.firstname = ? AND Customer.lastname = ?) ");
+		query.append("ORDER BY Operation.date; "); //TODO améliorer le classement
+
+		try {
+			connexion = getDbManager().getConnection();
+			pst = connexion.prepareStatement(query.toString());
+			pst.setString(1, firstname.toString());
+			pst.setString(2, lastname.toString());
+			rs = pst.executeQuery();
+
+			while (rs.next()) {
+				results.add(populateEntity(rs));
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+			if (pst != null) {
+				pst.close();
+			}
+
+			if (connexion != null) {
+				connexion.close();
+			}
+		}
+
+		return results;
+	}
+
 
 }

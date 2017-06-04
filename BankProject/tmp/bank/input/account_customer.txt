@@ -1,4 +1,0 @@
-Pays			Nom			Prenom			Somme
-France			Kiyindou			Dixi			50
-Grande-Bretagne			Beckham			David			1000
-Allemagne			Sammer			Matthias			500

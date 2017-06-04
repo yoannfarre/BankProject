@@ -150,5 +150,24 @@ public class Statement extends AbstractEntity {
 			break;
 		}
 	}
+	
+//	Operation.date, Operation.amount, Operation.type_operation, Account.country, Account.number, 
+//	Account.summary, Customer.firstname, Customer.lastname
+	
+	public String toString(){
+		
+		StringBuilder statement_string = new StringBuilder();
+		
+		statement_string.append(this.getDate()+"		");
+		statement_string.append(this.getAmount()+"		");
+		statement_string.append(this.getType_operation()+"			");
+		statement_string.append(this.getCountry()+"		");
+		statement_string.append(this.getNumber()+"	");
+		statement_string.append(this.getSummary()+"		");
+		statement_string.append(this.getFirstname()+"		");
+		statement_string.append(this.getLastname());
+		
+		return statement_string.toString();
+	}
 
 }

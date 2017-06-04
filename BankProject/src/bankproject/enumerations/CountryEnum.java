@@ -2,6 +2,6 @@ package bankproject.enumerations;
 
 public enum CountryEnum {
 	
-	BRITAIN, FRANCE, GERMANY, NEDERLANDS, BELGIUM, SPAIN
+	BELGIUM, BRITAIN, FRANCE, GERMANY, NEDERLANDS, SPAIN
 
 }

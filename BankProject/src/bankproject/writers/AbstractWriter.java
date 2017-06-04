@@ -52,4 +52,19 @@ public abstract class AbstractWriter {
 		return dirPath;
 		
 	}
+	
+	public String writeFirstLine(){
+		
+		StringBuilder firstline = new StringBuilder();
+		firstline.append("Date				");
+		firstline.append("Amount		");
+		firstline.append("Type_operation		");
+		firstline.append("Country		");
+		firstline.append("Number		");
+		firstline.append("Summary	");
+		firstline.append("FirstName	");
+		firstline.append("LastName");
+		
+		return firstline.toString();
+	}
 }

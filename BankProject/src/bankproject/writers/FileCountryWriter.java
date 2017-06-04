@@ -1,26 +1,23 @@
 package bankproject.writers;
 
 import java.io.File;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.Collection;
+import java.util.HashSet;
 
-import bankproject.entities.Customer;
+import bankproject.entities.Statement;
+import bankproject.enumerations.CountryEnum;
 import bankproject.services.SQLiteManager;
-import bankproject.services.SrvAccount;
-import bankproject.services.SrvCustomer;
-import bankproject.services.SrvOperation;
+import bankproject.services.SrvStatement;
 
 public class FileCountryWriter extends AbstractWriter {
 
 	public FileCountryWriter() {
-		
+
 		super();
 	}
 
 	public String getFileOutputPath() {
-		
+
 		String dirPath = getFileOutputPrimaryPath() + "country.txt";
 		File dir = new File(dirPath);
 		if (dir.exists()) {
@@ -31,27 +28,33 @@ public class FileCountryWriter extends AbstractWriter {
 	}
 
 	protected void writeInFile() {
-		
-		
-		
-// Test
-		for (int i = 0; i < 10; i++) {
-			output.println(Integer.toString(i) + ": ");
+
+		SrvStatement srvStatement = SrvStatement.getInstance();
+		srvStatement.setDbManager(SQLiteManager.getInstance());
+
+		Collection<Statement> results = new HashSet<>();
+
+		output.println("Bank statements ordered by country");
+
+		// Operation.date, Operation.amount, Operation.type_operation,
+		// Account.country, Account.number,
+		// Account.summary, Customer.firstname, Customer.lastname
+
+		for (CountryEnum country : CountryEnum.values()) {
+
+			try {
+				results = srvStatement.requestStatementsByCountry(country);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			output.println(country.toString());
+			output.println(writeFirstLine());
+			for (Statement statement : results) {
+				output.println(statement.toString());
+			}
 
 		}
-		
-//		SrvCustomer srvCustomer = SrvCustomer.getInstance();
-//		srvCustomer.setDbManager(SQLiteManager.getInstance());
-//
-//		SrvAccount srvAccount = SrvAccount.getInstance();
-//		srvAccount.setDbManager(SQLiteManager.getInstance());
-//
-//		SrvOperation srvOperation = SrvOperation.getInstance();
-//		srvOperation.setDbManager(SQLiteManager.getInstance());
-		
-		
-
 	}
-	
-	
+
 }

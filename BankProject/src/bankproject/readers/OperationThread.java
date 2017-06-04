@@ -1,7 +1,5 @@
 package bankproject.readers;
 
-import java.util.Date;
-
 public class OperationThread extends Thread {
 
 	int time = 60000 * 11; // 11 minutes

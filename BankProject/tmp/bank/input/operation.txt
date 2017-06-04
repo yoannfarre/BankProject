@@ -1,4 +1,0 @@
-Amount			Account			Customer
--50			FR055079			Dixi Kiyindou
-+1000			GB048126			David Beckham
--150			GB048126			David Beckham

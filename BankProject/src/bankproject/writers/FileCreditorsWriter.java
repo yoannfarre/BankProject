@@ -1,6 +1,14 @@
 package bankproject.writers;
 
 import java.io.File;
+import java.util.Collection;
+import java.util.HashSet;
+
+import bankproject.entities.Statement;
+import bankproject.enumerations.CountryEnum;
+import bankproject.enumerations.TypeOperationEnum;
+import bankproject.services.SQLiteManager;
+import bankproject.services.SrvStatement;
 
 public class FileCreditorsWriter extends AbstractWriter {
 
@@ -22,10 +30,33 @@ public class FileCreditorsWriter extends AbstractWriter {
 
 	protected void writeInFile() {
 
-		for (int i = 0; i < 10; i++) {
-			output.println(Integer.toString(i) + ": ");
+		SrvStatement srvStatement = SrvStatement.getInstance();
+		srvStatement.setDbManager(SQLiteManager.getInstance());
 
-		}
+		Collection<Statement> results = new HashSet<>();
 
+		output.println("Bank statements for creditors");
+
+		// Operation.date, Operation.amount, Operation.type_operation,
+		// Account.country, Account.number,
+		// Account.summary, Customer.firstname, Customer.lastname
+
+//		for (CountryEnum country : CountryEnum.values()) {
+		
+		TypeOperationEnum type = TypeOperationEnum.CREDIT;
+
+			try {
+				results = srvStatement.requestStatementsCreditors(type);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			output.println(writeFirstLine());
+			for (Statement statement : results) {
+				output.println(statement.toString());
+			}
+
+		
 	}
 }

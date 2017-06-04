@@ -27,7 +27,7 @@ public class AccountCustomerReader extends AbstractReader { // TODO Corriger Err
 	public String getFileInputPath() {
 
 		String dirPath = getFileInputPrimaryPath() + "account_customer.txt";
-		System.out.println(dirPath);
+//		System.out.println(dirPath);
 
 //		File dir = new File(dirPath);
 //

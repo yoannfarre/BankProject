@@ -5,11 +5,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import bankproject.readers.AccountCustomerThread;
+import bankproject.readers.OperationThread;
 import bankproject.services.AbstractService;
 import bankproject.services.SQLiteManager;
 import bankproject.services.SrvAccount;
 import bankproject.services.SrvCustomer;
 import bankproject.services.SrvOperation;
+import bankproject.writers.BankStatmentThread;
 
 public class Main {
 
@@ -38,6 +41,13 @@ public class Main {
 			st.execute(as.createTableInDB());
 
 		}
+		
+		// Problème de gestion des Thread
+		AccountCustomerThread act = new AccountCustomerThread("A");
+		
+		OperationThread ot = new OperationThread("B");
+		
+		BankStatmentThread bst = new BankStatmentThread("C");
 
 
 		

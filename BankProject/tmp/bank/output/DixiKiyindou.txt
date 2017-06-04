@@ -1,6 +1,0 @@
-Dixi Kiyindou
-Date				Amount		Type_operation		Country		Number		Summary	FirstName	LastName
-2017-06-03 15:49:30.540		50.0		DEBIT			FRANCE		FR055079	-150.0		Dixi		Kiyindou
-2017-06-03 15:49:56.007		50.0		DEBIT			FRANCE		FR055079	-150.0		Dixi		Kiyindou
-2017-06-03 15:43:18.631		50.0		DEBIT			FRANCE		FR055079	-150.0		Dixi		Kiyindou
-2017-06-04 10:08:30.172		50.0		DEBIT			FRANCE		FR055079	-150.0		Dixi		Kiyindou

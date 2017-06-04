@@ -21,6 +21,10 @@ import bankproject.services.SrvOperation;
 
 public class OperationReader extends AbstractReader {
 
+	/********************************
+	 ********** Builders ************
+	 ********************************/
+
 	public OperationReader() {
 
 		this.input = null;
@@ -29,19 +33,24 @@ public class OperationReader extends AbstractReader {
 
 	}
 
+	/********************************
+	 ********** Methods *************
+	 ********************************/
+
 	public String getFileInputPath() {
 
 		String dirPath = getFileInputPrimaryPath() + "operation.txt";
-//		System.out.println(dirPath);
-//
-//		File dir = new File(dirPath);
-//
-//		System.out.println(dir.getName());
-//
-//		if (!(dir.exists() && dir.isDirectory())) {
-//			dir.mkdirs();
-//			System.err.println("# Error : \"" + dir.getName() + "\" n'existe pas.");
-//		}
+		// System.out.println(dirPath);
+		//
+		// File dir = new File(dirPath);
+		//
+		// System.out.println(dir.getName());
+		//
+		// if (!(dir.exists() && dir.isDirectory())) {
+		// dir.mkdirs();
+		// System.err.println("# Error : \"" + dir.getName() + "\" n'existe
+		// pas.");
+		// }
 
 		return dirPath;
 
@@ -240,23 +249,21 @@ public class OperationReader extends AbstractReader {
 
 				SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
-				//System.out.println("Current Date: " + ft.format(date));
+				// System.out.println("Current Date: " + ft.format(date));
 
 				operation.setAccount_id(account.getId());
 				operation.setCustomer_id(account.getCustomer_id());
 				operation.setDate(ft.format(date));
 
-
-				
-				 try {
-				 srvOperation.save(operation);
-				 } catch (SrvException e) {
-				 // TODO Auto-generated catch block
-				 e.printStackTrace();
-				 } catch (SQLException e) {
-				 // TODO Auto-generated catch block
-				 e.printStackTrace();
-				 }
+				try {
+					srvOperation.save(operation);
+				} catch (SrvException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				//
 				// }
 

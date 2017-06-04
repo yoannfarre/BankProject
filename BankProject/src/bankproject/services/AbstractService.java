@@ -13,55 +13,60 @@ import bankproject.entities.AbstractEntity;
 import bankproject.exceptions.SrvException;
 
 public abstract class AbstractService {
-	
+
+	/********************************
+	 ********** Attributes **********
+	 ********************************/
+
 	private String entitySqlTable;
 	private DatabaseManager dbManager;
-	
-	/**
-	 * @return the entityTable
-	 */
+
+	/********************************
+	 ********** Getters *************
+	 ********************************/
+
 	public String getEntitySqlTable() {
 		return entitySqlTable;
 	}
 
-	/**
-	 * @param entityTable the entityTable to set
-	 */
+	public DatabaseManager getDbManager() {
+		return dbManager;
+	}
+
+	/********************************
+	 ********** Setters *************
+	 ********************************/
+
 	public void setEntitySqlTable(String entityTable) {
 		this.entitySqlTable = entityTable;
 	}
 
-	/**
-	 * Create or update entity
-	 * 
-	 * @param entity
-	 * @throws SrvException 
-	 * @throws SQLException 
-	 */
+	public void setDbManager(DatabaseManager dbManager) {
+		this.dbManager = dbManager;
+	}
+
+	/********************************
+	 ********** Methods ************
+	 ********************************/
+
 	public abstract void save(AbstractEntity entity) throws SrvException, SQLException;
-	
-	/**
-	 * Get Entity by Id
-	 * @param id
-	 * @return
-	 * @throws Exception
-	 */
+
 	public AbstractEntity get(Integer id) throws Exception {
 		Connection connexion = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		AbstractEntity result = null;
-		
+
 		StringBuilder query = new StringBuilder("SELECT * FROM ");
 		query.append(getEntitySqlTable());
 		query.append(" WHERE id = ?");
-		
+
 		try {
 			connexion = getDbManager().getConnection();
 			pst = connexion.prepareStatement(query.toString());
 			pst.setInt(1, id);
 			rs = pst.executeQuery();
-			
+
 			while (rs.next()) {
 				result = populateEntity(rs);
 			}
@@ -70,50 +75,43 @@ public abstract class AbstractService {
 			e.printStackTrace();
 		} finally {
 
-			
 			if (pst != null) {
 				pst.close();
 			}
-			
+
 			if (connexion != null) {
 				connexion.close();
 			}
 		}
-		
+
 		return result;
 	}
-	
-	/**
-	 * Get collection of entities by ids
-	 * 
-	 * @param ids
-	 * @return
-	 */
-	public Collection<AbstractEntity> get(Collection<Integer> ids)  throws Exception {
+
+	public Collection<AbstractEntity> get(Collection<Integer> ids) throws Exception {
 		Connection connexion = null;
 		Statement st = null;
 		ResultSet rs = null;
 		Collection<AbstractEntity> results = new HashSet<AbstractEntity>();
-		
+
 		StringBuilder query = new StringBuilder("SELECT * FROM ");
 		query.append(getEntitySqlTable());
 		query.append(" WHERE id IN (");
-		
+
 		Iterator<Integer> it = ids.iterator();
 		do {
 			query.append(it.next());
 			if (it.hasNext()) {
 				query.append(",");
 			}
-		} while(it.hasNext());
-		
+		} while (it.hasNext());
+
 		query.append(")");
-		
+
 		try {
 			connexion = getDbManager().getConnection();
 			st = connexion.createStatement();
 			rs = st.executeQuery(query.toString());
-			
+
 			while (rs.next()) {
 				results.add(populateEntity(rs));
 			}
@@ -122,43 +120,19 @@ public abstract class AbstractService {
 			e.printStackTrace();
 		} finally {
 
-			
 			if (st != null) {
 				st.close();
 			}
-			
+
 			if (connexion != null) {
 				connexion.close();
 			}
 		}
-		
+
 		return results;
 	}
 
-	/**
-	 * 
-	 * @param rs
-	 * @return
-	 * @throws SQLException 
-	 * @throws Exception 
-	 */
 	protected abstract AbstractEntity populateEntity(ResultSet rs) throws SQLException, Exception;
-
-	/**
-	 * 
-	 * @return
-	 */
-	public DatabaseManager getDbManager() {
-		return dbManager;
-	}
-
-	/**
-	 * 
-	 * @param dbManager
-	 */
-	public void setDbManager(DatabaseManager dbManager) {
-		this.dbManager = dbManager;
-	}
 
 	public abstract String createTableInDB();
 }

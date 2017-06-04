@@ -6,9 +6,17 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public abstract class AbstractWriter {
+	
+	/********************************
+	 ********** Attributes **********
+	 ********************************/
 
 	PrintWriter output = null;
 	File file;
+	
+	/********************************
+	 *********** Builders ***********
+	 ********************************/
 
 	public AbstractWriter() {
 
@@ -18,6 +26,10 @@ public abstract class AbstractWriter {
 
 	}
 
+	/********************************
+	 *********** Methods ***********
+	 ********************************/
+	
 	public void createFile() {
 
 		try {

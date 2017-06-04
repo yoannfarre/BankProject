@@ -10,6 +10,10 @@ import bankproject.services.SQLiteManager;
 import bankproject.services.SrvStatement;
 
 public class FileCountryWriter extends AbstractWriter {
+	
+	/********************************
+	 *********** Builders ***********
+	 ********************************/
 
 	public FileCountryWriter() {
 
@@ -17,6 +21,10 @@ public class FileCountryWriter extends AbstractWriter {
 		file = new File(getFileOutputPath());
 		createFile();
 	}
+	
+	/********************************
+	 *********** Methods ***********
+	 ********************************/
 
 	public String getFileOutputPath() {
 

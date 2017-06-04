@@ -7,14 +7,26 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public abstract class AbstractReader extends Thread {
+	
+	/********************************
+	 ********** Attributes **********
+	 ********************************/
 
 	File file;
 	BufferedReader input = null;
 	Boolean fileexist = false;
+	
+	/********************************
+	 ********** Builders ************
+	 ********************************/
 
 	public AbstractReader() {
 
 	}
+	
+	/********************************
+	 ********** Methods *************
+	 ********************************/
 
 	public String getFileInputPath() {
 		return null;
@@ -55,9 +67,6 @@ public abstract class AbstractReader extends Thread {
 				System.err.println("# Error on closing \"" + file + "\".");
 				System.exit(1);
 			}
-
-			// Suppression du fichier
-			// TODO Réactiver la suppression quand les tests seront terminés
 
 			deleteFile(file);
 		}

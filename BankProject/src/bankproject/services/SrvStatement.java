@@ -15,11 +15,23 @@ import bankproject.exceptions.SrvException;
 
 public class SrvStatement extends AbstractService {
 
+	/********************************
+	 ********* Attributes ***********
+	 ********************************/
+
 	private static SrvStatement INSTANCE = new SrvStatement();
+
+	/********************************
+	 *********** Getters ************
+	 ********************************/
 
 	public static SrvStatement getInstance() {
 		return INSTANCE;
 	}
+
+	/********************************
+	 *********** Methods ************
+	 ********************************/
 
 	@Override
 	public void save(AbstractEntity entity) throws SrvException, SQLException {
@@ -60,7 +72,8 @@ public class SrvStatement extends AbstractService {
 		query.append("INNER JOIN Account ON Account.id = Operation.account_id ");
 		query.append("INNER JOIN Customer ON Customer.id = Operation.customer_id ");
 		query.append("WHERE Operation.type_operation = ? ");
-		query.append("ORDER BY Operation.date; "); //TODO améliorer le classement
+		query.append("ORDER BY Operation.date; "); // TODO améliorer le
+													// classement
 
 		try {
 			connexion = getDbManager().getConnection();
@@ -104,7 +117,8 @@ public class SrvStatement extends AbstractService {
 		query.append("INNER JOIN Account ON Account.id = Operation.account_id ");
 		query.append("INNER JOIN Customer ON Customer.id = Operation.customer_id ");
 		query.append("WHERE Account.country = ? ");
-		//query.append("ORDER BY Customer.lastname ;"); TODO améliorer le classement
+		// query.append("ORDER BY Customer.lastname ;"); TODO améliorer le
+		// classement
 
 		try {
 			connexion = getDbManager().getConnection();
@@ -132,7 +146,7 @@ public class SrvStatement extends AbstractService {
 
 		return results;
 	}
-	
+
 	public Collection<Statement> requestStatementsCustomer(String firstname, String lastname) throws Exception {
 
 		Connection connexion = null;
@@ -148,7 +162,8 @@ public class SrvStatement extends AbstractService {
 		query.append("INNER JOIN Account ON Account.id = Operation.account_id ");
 		query.append("INNER JOIN Customer ON Customer.id = Operation.customer_id ");
 		query.append("WHERE (Customer.firstname = ? AND Customer.lastname = ?) ");
-		query.append("ORDER BY Operation.date; "); //TODO améliorer le classement
+		query.append("ORDER BY Operation.date; "); // TODO améliorer le
+													// classement
 
 		try {
 			connexion = getDbManager().getConnection();
@@ -177,6 +192,5 @@ public class SrvStatement extends AbstractService {
 
 		return results;
 	}
-
 
 }

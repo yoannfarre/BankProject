@@ -14,9 +14,17 @@ import bankproject.services.SrvStatement;
 
 public class FileCustomerWriter extends AbstractWriter {
 
+	/********************************
+	 ********** Attributes **********
+	 ********************************/
+
 	String firstname;
 	String lastname;
 	Boolean exist = false;
+
+	/********************************
+	 *********** Builders ***********
+	 ********************************/
 
 	public FileCustomerWriter() {
 
@@ -30,13 +38,41 @@ public class FileCustomerWriter extends AbstractWriter {
 
 	}
 
+	/********************************
+	 *********** Getters ************
+	 ********************************/
+
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public String getLastname() {
+		return lastname;
+	}
+
+	/********************************
+	 *********** Setters ************
+	 ********************************/
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+	/********************************
+	 *********** Methods ***********
+	 ********************************/
+
 	public void tryIfExist() {
 
 		SrvCustomer srvCustomer = SrvCustomer.getInstance();
 		srvCustomer.setDbManager(SQLiteManager.getInstance());
 
 		Customer customer = new Customer();
-		
+
 		customer.setFirstname(getFirstname());
 		customer.setLastname(getLastname());
 
@@ -116,26 +152,6 @@ public class FileCustomerWriter extends AbstractWriter {
 			count++;
 		}
 
-	}
-	
-	public void fillFields(){
-		
-	}
-
-	public String getFirstname() {
-		return firstname;
-	}
-
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-
-	public String getLastname() {
-		return lastname;
-	}
-
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
 	}
 
 }

@@ -2,12 +2,24 @@ package bankproject.writers;
 
 public class CustomerStatementThread extends Thread {
 
+	/********************************
+	 *********** Attributes ***********
+	 ********************************/
+
 	static int time = 2000; // 2 sec in ms
+
+	/********************************
+	 *********** Main test **********
+	 ********************************/
 
 	public static void main(String[] args) {
 
 		CustomerStatementThread act = new CustomerStatementThread("D");
 	}
+
+	/********************************
+	 *********** Builders ***********
+	 ********************************/
 
 	public CustomerStatementThread(String name) {
 		super(name);
@@ -16,10 +28,14 @@ public class CustomerStatementThread extends Thread {
 		System.out.println("statut du thread " + name + " = " + this.getState());
 	}
 
+	/********************************
+	 *********** Methods ************
+	 ********************************/
+
 	public void run() {
 
 		while (true) { // TODO Ajouter une condition de sortie
-			
+
 			FileCustomerWriter fcw = new FileCustomerWriter();
 
 			try {
@@ -29,7 +45,5 @@ public class CustomerStatementThread extends Thread {
 			}
 		}
 	}
-
-
 
 }

@@ -19,6 +19,8 @@ import bankproject.writers.CustomerStatementThread;
 public class Main {
 
 	public static void main(String[] args) throws SQLException {
+		
+		// Construction de la BDD si nécessaire
 
 		ArrayList<AbstractService> services_list = new ArrayList<AbstractService>();
 
@@ -44,7 +46,8 @@ public class Main {
 
 		}
 		
-		// Problème de gestion des Thread
+		// Lancement des Threads
+		
 		AccountCustomerThread act = new AccountCustomerThread("A");
 		
 		OperationThread ot = new OperationThread("B");

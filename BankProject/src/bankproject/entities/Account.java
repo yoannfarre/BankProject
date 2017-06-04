@@ -7,25 +7,29 @@ public class Account extends AbstractEntity {
 	/********************************
 	 ********** Attributes **********
 	 ********************************/
-	
+
 	private Integer id;
 	private String number;
 	private Integer customer_id;
 	private Double summary;
 	private CountryEnum country;
-	
+
 	/********************************
-	 ********** Test Main  **********
+	 ********** Test Main ***********
 	 ********************************/
 
 	public static void main(String[] args) {
 
-		Account account = new Account();
-		account.setCountry(CountryEnum.BELGIUM);
-		account.setCustomer_id(8);
-		System.out.println(account.getCountry());
-		System.out.println(account.getCustomer_id());
+		// Account account = new Account();
+		// account.setCountry(CountryEnum.BELGIUM);
+		// account.setCustomer_id(8);
+		// System.out.println(account.getCountry());
+		// System.out.println(account.getCustomer_id());
 	}
+
+	/******************************
+	 ********** Methods **********
+	 ******************************/
 
 	public String buildNumber(CountryEnum country) {
 
@@ -64,40 +68,48 @@ public class Account extends AbstractEntity {
 		return sb.toString();
 	}
 
+	/******************************
+	 ********** Getters **********
+	 ******************************/
+
 	public Integer getId() {
 		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getNumber() {
 		return number;
 	}
 
-	public void setNumber(String number) {
-		this.number = number;
-	}
-
 	public Integer getCustomer_id() {
 		return customer_id;
-	}
-
-	public void setCustomer_id(Integer customer_) {
-		this.customer_id = customer_;
 	}
 
 	public Double getSummary() {
 		return summary;
 	}
 
-	public void setSummary(Double summary) {
-		this.summary = summary;
-	}
-
 	public CountryEnum getCountry() {
 		return country;
+	}
+
+	/******************************
+	 ********** Setters **********
+	 ******************************/
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
+	}
+
+	public void setCustomer_id(Integer customer_) {
+		this.customer_id = customer_;
+	}
+
+	public void setSummary(Double summary) {
+		this.summary = summary;
 	}
 
 	public void setCountry(CountryEnum country_) {
@@ -105,8 +117,9 @@ public class Account extends AbstractEntity {
 	}
 
 	public void setCountry(String country_) {
-		
-		// TODO On doit pouvoir faire mieux en intégrant les différentes possibilités à CountryEnum 
+
+		// TODO On doit pouvoir faire mieux en intégrant les différentes
+		// possibilités à CountryEnum
 
 		switch (country_) {
 

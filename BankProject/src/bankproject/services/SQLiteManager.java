@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class SQLiteManager extends DatabaseManager {
+	
 	private static SQLiteManager INSTANCE = new SQLiteManager(); 
 	private String url;
 	

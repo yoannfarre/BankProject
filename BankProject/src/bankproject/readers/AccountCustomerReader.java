@@ -14,37 +14,47 @@ import bankproject.services.SQLiteManager;
 import bankproject.services.SrvAccount;
 import bankproject.services.SrvCustomer;
 
-public class AccountCustomerReader extends AbstractReader { // TODO Corriger Erreur sur la méthode getFileInputPath()
+public class AccountCustomerReader extends AbstractReader { // TODO Corriger
+															// Erreur sur la
+															// méthode
+															// getFileInputPath()
 
+	/********************************
+	 ********** Builders ************
+	 ********************************/
+	
 	public AccountCustomerReader() {
 
 		this.input = null;
 		this.file = new File(getFileInputPath());
 		readFile();
-//		
+
 	}
+	
+	/********************************
+	 ********** Methods ************
+	 ********************************/
 
 	public String getFileInputPath() {
 
 		String dirPath = getFileInputPrimaryPath() + "account_customer.txt";
-//		System.out.println(dirPath);
+		// System.out.println(dirPath);
 
-//		File dir = new File(dirPath);
-//
-//		System.out.println(dir.getName());
-//
-//		if (!(dir.exists() && dir.isDirectory())) {
-//			dir.mkdirs();
-//			System.err.println("# Error : \"" + dir.getName() + "\" n'existe pas. Test");
-//		}
+		// File dir = new File(dirPath);
+		//
+		// System.out.println(dir.getName());
+		//
+		// if (!(dir.exists() && dir.isDirectory())) {
+		// dir.mkdirs();
+		// System.err.println("# Error : \"" + dir.getName() + "\" n'existe pas.
+		// Test");
+		// }
 
 		return dirPath;
 
 	}
 
 	public void readSpecificFile() {
-		
-
 
 		LinkedHashMap<Customer, Account> customer_account_map = new LinkedHashMap<>();
 		LinkedHashSet<Customer> customer_set = new LinkedHashSet<>();
@@ -76,7 +86,7 @@ public class AccountCustomerReader extends AbstractReader { // TODO Corriger Err
 
 				// Saute la première ligne
 
-				// TODO Travailler evec l'Enum des mots de première ligne pour
+				// TODO Travailler avec l'Enum des mots de première ligne pour
 				// simplifier le code
 
 				if (field.equals("Pays") || field.equals("Nom") || field.equals("Prenom") || field.equals("Somme")) {

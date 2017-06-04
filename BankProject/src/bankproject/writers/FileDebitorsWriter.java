@@ -11,12 +11,20 @@ import bankproject.services.SrvStatement;
 
 public class FileDebitorsWriter extends AbstractWriter {
 
+	/********************************
+	 *********** Builders ***********
+	 ********************************/
+
 	public FileDebitorsWriter() {
 
 		output = null;
 		file = new File(getFileOutputPath());
 		createFile();
 	}
+
+	/********************************
+	 *********** Methods ***********
+	 ********************************/
 
 	public String getFileOutputPath() {
 
@@ -37,22 +45,20 @@ public class FileDebitorsWriter extends AbstractWriter {
 		Collection<Statement> results = new HashSet<>();
 
 		output.println("Bank statements for debitors");
-		
+
 		TypeOperationEnum type = TypeOperationEnum.DEBIT;
 
-			try {
-				results = srvStatement.requestStatementsCreditors(type);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			output.println(writeFirstLine());
-			for (Statement statement : results) {
-				output.println(statement.toString());
-			}
-
+		try {
+			results = srvStatement.requestStatementsCreditors(type);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
+		output.println(writeFirstLine());
+		for (Statement statement : results) {
+			output.println(statement.toString());
+		}
+
 	}
-
-
+}

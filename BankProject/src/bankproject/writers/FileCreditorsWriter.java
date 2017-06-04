@@ -5,12 +5,15 @@ import java.util.Collection;
 import java.util.HashSet;
 
 import bankproject.entities.Statement;
-import bankproject.enumerations.CountryEnum;
 import bankproject.enumerations.TypeOperationEnum;
 import bankproject.services.SQLiteManager;
 import bankproject.services.SrvStatement;
 
 public class FileCreditorsWriter extends AbstractWriter {
+
+	/********************************
+	 *********** Builders ***********
+	 ********************************/
 
 	public FileCreditorsWriter() {
 
@@ -18,6 +21,10 @@ public class FileCreditorsWriter extends AbstractWriter {
 		file = new File(getFileOutputPath());
 		createFile();
 	}
+
+	/********************************
+	 *********** Methods ***********
+	 ********************************/
 
 	public String getFileOutputPath() {
 
@@ -42,21 +49,20 @@ public class FileCreditorsWriter extends AbstractWriter {
 		// Operation.date, Operation.amount, Operation.type_operation,
 		// Account.country, Account.number,
 		// Account.summary, Customer.firstname, Customer.lastname
-		
+
 		TypeOperationEnum type = TypeOperationEnum.CREDIT;
 
-			try {
-				results = srvStatement.requestStatementsCreditors(type);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		try {
+			results = srvStatement.requestStatementsCreditors(type);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-			output.println(writeFirstLine());
-			for (Statement statement : results) {
-				output.println(statement.toString());
-			}
+		output.println(writeFirstLine());
+		for (Statement statement : results) {
+			output.println(statement.toString());
+		}
 
-		
 	}
 }

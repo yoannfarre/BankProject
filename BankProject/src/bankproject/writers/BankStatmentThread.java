@@ -1,13 +1,25 @@
 package bankproject.writers;
 
 public class BankStatmentThread extends Thread {
+	
+	/********************************
+	 ********** Attributes **********
+	 ********************************/
 
 	static int time = 60000 * 13; // 13 minutes en ms
+	
+	/********************************
+	 ********** Main test ***********
+	 ********************************/
 
 	public static void main(String[] args) {
 
 		BankStatmentThread act = new BankStatmentThread("C");
 	}
+	
+	/********************************
+	 *********** Builders ***********
+	 ********************************/
 
 	public BankStatmentThread(String name) {
 		super(name);
@@ -15,6 +27,10 @@ public class BankStatmentThread extends Thread {
 		this.start();
 		System.out.println("statut du thread " + name + " = " + this.getState());
 	}
+	
+	/********************************
+	 *********** Methods ***********
+	 ********************************/
 
 	public void run() {
 

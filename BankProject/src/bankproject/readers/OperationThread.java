@@ -35,20 +35,18 @@ public class OperationThread extends Thread {
 	public void run() {
 
 		while (true) { // TODO Ajouter une condition de sortie
-			
-			try { //delay time on launching
-				Thread.sleep(delay);
-			} catch (InterruptedException ie) {
-				continue; // Recommencer en début de boucle
-			}
-
-			OperationReader or = new OperationReader();
 
 			try {
+				Thread.sleep(delay); //delay on launching
+				OperationReader or = new OperationReader();
 				Thread.sleep(time);
 			} catch (InterruptedException ie) {
 				continue; // Recommencer en début de boucle
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+
 		}
 
 	}

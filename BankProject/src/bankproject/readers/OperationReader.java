@@ -25,7 +25,7 @@ public class OperationReader extends AbstractReader {
 	 ********** Builders ************
 	 ********************************/
 
-	public OperationReader() {
+	public OperationReader() throws Exception {
 
 		this.input = null;
 		this.file = new File(getFileInputPath());
@@ -168,14 +168,14 @@ public class OperationReader extends AbstractReader {
 
 		// Remplissage BDD Table Customer
 
-		SrvCustomer srvCustomer = SrvCustomer.getInstance();
-		srvCustomer.setDbManager(SQLiteManager.getInstance());
+		SrvCustomer srvCustomer = SrvCustomer.getInstance(SQLiteManager.getInstance());
 
-		SrvAccount srvAccount = SrvAccount.getInstance();
-		srvAccount.setDbManager(SQLiteManager.getInstance());
 
-		SrvOperation srvOperation = SrvOperation.getInstance();
-		srvOperation.setDbManager(SQLiteManager.getInstance());
+		SrvAccount srvAccount = SrvAccount.getInstance(SQLiteManager.getInstance());
+
+
+		SrvOperation srvOperation = SrvOperation.getInstance(SQLiteManager.getInstance());
+
 
 		for (Account account : account_set) {
 

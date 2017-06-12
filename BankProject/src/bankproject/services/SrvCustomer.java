@@ -28,8 +28,11 @@ public class SrvCustomer extends AbstractService {
 	/********************************
 	 ************ Getters ***********
 	 ********************************/
-
-	public static SrvCustomer getInstance() {
+	
+	public static SrvCustomer getInstance (DatabaseManager dbm) {
+		if (INSTANCE.getDbManager() == null) {
+			INSTANCE.setDbManager(dbm);
+		}
 		return INSTANCE;
 	}
 

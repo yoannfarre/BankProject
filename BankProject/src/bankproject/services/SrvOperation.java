@@ -30,7 +30,10 @@ public class SrvOperation extends AbstractService {
 	 *********** Getters ************
 	 ********************************/
 
-	public static SrvOperation getInstance() {
+	public static SrvOperation getInstance (DatabaseManager dbm) {
+		if (INSTANCE.getDbManager() == null) {
+			INSTANCE.setDbManager(dbm);
+		}
 		return INSTANCE;
 	}
 

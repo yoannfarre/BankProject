@@ -31,7 +31,10 @@ public class SrvAccount extends AbstractService {
 	 *********** Getters ************
 	 ********************************/
 
-	public static SrvAccount getInstance() {
+	public static SrvAccount getInstance (DatabaseManager dbm) {
+		if (INSTANCE.getDbManager() == null) {
+			INSTANCE.setDbManager(dbm);
+		}
 		return INSTANCE;
 	}
 

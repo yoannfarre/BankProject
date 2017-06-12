@@ -4,10 +4,9 @@ public enum CountryEnum {
 	
 	BELGIUM, BRITAIN, FRANCE, GERMANY, NEDERLANDS, SPAIN;
 
-	public String asShortName(){// A corriger en ajoutant des paramètres
-		
-		return "Test";
-		
+	public static CountryEnum getByLongName(String trim) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

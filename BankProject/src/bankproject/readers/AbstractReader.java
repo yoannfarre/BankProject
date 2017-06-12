@@ -40,7 +40,7 @@ public abstract class AbstractReader extends Thread {
 
 	}
 
-	protected void readFile() {
+	protected void readFile() throws Exception {
 
 		if (!file.exists()) {
 			System.err.println("# Error : \"" + getFileInputPath() + "\" n'existe pas.");
@@ -73,7 +73,7 @@ public abstract class AbstractReader extends Thread {
 
 	}
 
-	public void readSpecificFile() {
+	public void readSpecificFile() throws Exception {
 
 	}
 

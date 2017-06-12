@@ -68,8 +68,7 @@ public class FileCustomerWriter extends AbstractWriter {
 
 	public void tryIfExist() {
 
-		SrvCustomer srvCustomer = SrvCustomer.getInstance();
-		srvCustomer.setDbManager(SQLiteManager.getInstance());
+		SrvCustomer srvcustomer = SrvCustomer.getInstance(SQLiteManager.getInstance());
 
 		Customer customer = new Customer();
 
@@ -80,7 +79,7 @@ public class FileCustomerWriter extends AbstractWriter {
 
 		try {
 
-			int id = srvCustomer.get(customer.getFirstname(), customer.getLastname()).getId();
+			int id = srvcustomer.get(customer.getFirstname(), customer.getLastname()).getId();
 			customer.setId(id);
 		} catch (Exception e1) {
 			exist = false;

@@ -22,16 +22,13 @@ public class InitDB {
 
 		ArrayList<AbstractService> services_list = new ArrayList<AbstractService>();
 
-		SrvCustomer srvCustomer = SrvCustomer.getInstance();
-		srvCustomer.setDbManager(SQLiteManager.getInstance());
-		services_list.add(srvCustomer);
+		SrvCustomer srvcustomer = SrvCustomer.getInstance(SQLiteManager.getInstance());
+		services_list.add(srvcustomer);
 
-		SrvAccount srvAccount = SrvAccount.getInstance();
-		srvAccount.setDbManager(SQLiteManager.getInstance());
-		services_list.add(srvAccount);
+		SrvAccount srvaccount = SrvAccount.getInstance(SQLiteManager.getInstance());
+		services_list.add(srvaccount);
 
-		SrvOperation srvOperation = SrvOperation.getInstance();
-		srvOperation.setDbManager(SQLiteManager.getInstance());
+		SrvOperation srvOperation = SrvOperation.getInstance(SQLiteManager.getInstance());
 		services_list.add(srvOperation);
 
 		Connection connection;

@@ -5,10 +5,12 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
 import bankproject.entities.Account;
 import bankproject.entities.Customer;
+import bankproject.enumerations.CountryEnum;
 import bankproject.exceptions.SrvException;
 import bankproject.services.SQLiteManager;
 import bankproject.services.SrvAccount;
@@ -22,15 +24,15 @@ public class AccountCustomerReader extends AbstractReader { // TODO Corriger
 	/********************************
 	 ********** Builders ************
 	 ********************************/
-	
-	public AccountCustomerReader() {
+
+	public AccountCustomerReader() throws Exception {
 
 		this.input = null;
 		this.file = new File(getFileInputPath());
 		readFile();
 
 	}
-	
+
 	/********************************
 	 ********** Methods ************
 	 ********************************/
@@ -54,163 +56,53 @@ public class AccountCustomerReader extends AbstractReader { // TODO Corriger
 
 	}
 
-	public void readSpecificFile() {
+	public void readSpecificFile() throws Exception {
 
-		LinkedHashMap<Customer, Account> customer_account_map = new LinkedHashMap<>();
-		LinkedHashSet<Customer> customer_set = new LinkedHashSet<>();
+		Scanner sc = new Scanner(file);
+		int i = 0;
 
-		while (true) {
-			String ligne = null;
-			try {
-				ligne = input.readLine();
-			} catch (IOException e) {
-				System.err.println("# Erreur pendant la lecture de \"" + file + "\".");
-				System.exit(1);
+		while (sc.hasNextLine()) {
+			String line = sc.nextLine();
+			if (i > 0) {
+				Scanner line_scanner = new Scanner(line);
+				CountryEnum country = CountryEnum.getByLongName(line_scanner.next().trim());
+				String lastName = line_scanner.next().trim();
+				String firstName = line_scanner.next().trim();
+				Integer amount = line_scanner.nextInt();
+				line_scanner.close();
+
+				saveCustomer(firstName, lastName);
+
+				SrvCustomer srvcustomer = SrvCustomer.getInstance(SQLiteManager.getInstance());
+				Customer customer = srvcustomer.get(firstName, lastName);
+
+				saveAccount(customer, country, amount);
 			}
-			if (ligne == null) {
-				// condition de sortie de boucle infinie
-				break;
-			}
-
-			// Interprétation des infos de chaque ligne du fichier
-
-			StringTokenizer st = new StringTokenizer(ligne, "\t\t\t");
-			Customer customer = new Customer();
-			Account account = new Account();
-			int count = 0;
-			boolean firstlineboolean = false;
-
-			while (st.hasMoreTokens()) {
-
-				String field = st.nextToken();
-
-				// Saute la première ligne
-
-				// TODO Travailler avec l'Enum des mots de première ligne pour
-				// simplifier le code
-
-				if (field.equals("Pays") || field.equals("Nom") || field.equals("Prenom") || field.equals("Somme")) {
-					firstlineboolean = true;
-					continue;
-				} else {
-
-					switch (count) {
-					case 0:
-						account.setCountry(field.toUpperCase());
-						break;
-					case 1:
-						customer.setLastname(field);
-						break;
-					case 2:
-						customer.setFirstname(field);
-						break;
-					case 3:
-						account.setSummary(Double.parseDouble(field));
-						break;
-
-					}
-
-				}
-
-				count++;
-			}
-
-			if (firstlineboolean == false) {
-
-				customer_set.add(customer);
-				customer_account_map.put(customer, account);
-			}
-
+			i++;
 		}
 
-		// Partie remplissage de base
+	}
 
-		// Remplissage BDD Table Customer
+	private void saveCustomer(String firstName, String lastName) throws Exception {
+		SrvCustomer srvcustomer = SrvCustomer.getInstance(SQLiteManager.getInstance());
+		Customer customer = srvcustomer.get(firstName, lastName);
+		srvcustomer.save(customer);
+	}
 
-		SrvCustomer srvCustomer = SrvCustomer.getInstance();
-		srvCustomer.setDbManager(SQLiteManager.getInstance());
+	private void saveAccount(Customer customer, CountryEnum country, Integer amount) throws Exception {
+		Account account = new Account();
+		account.setCustomer_id(customer.getId());
+		account.setCountry(country);
+		account.buildNumber(country);
 
-		SrvAccount srvAccount = SrvAccount.getInstance();
-		srvAccount.setDbManager(SQLiteManager.getInstance());
-
-		for (Customer customer : customer_set) {
-
-			if (customer.getFirstname() != null && customer.getLastname() != null) {
-
-				// Vérification de l'existence du Customer en BDD
-				boolean existcustomer = true;
-
-				try {
-
-					int id = srvCustomer.get(customer.getFirstname(), customer.getLastname()).getId();
-					customer.setId(id);
-					// TODO Rajouter une condition pour vérifier si int est
-					// null ou non
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					existcustomer = false;
-					System.out.println("Super, un nouveau client!");
-				}
-
-				// Sauvegarde du customer
-
-				try {
-					srvCustomer.save(customer);
-				} catch (SrvException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-				// Récupération de la nouvelle id créée si besoin
-
-				if (existcustomer == false) {
-
-					try {
-
-						customer.setId(srvCustomer.get(customer.getFirstname(), customer.getLastname()).getId());
-
-					} catch (Exception e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}
-
-				// Remplissage BDD Table Account avec id correspondant
-
-				Account account = customer_account_map.get(customer);
-
-				if (account.getCountry() != null) {
-
-					String number_ = account.buildNumber(account.getCountry());
-
-					// TODO Rajouter une condition pour vérifier si le numéro
-					// existe déjà dans la base
-					// Il faut récupérer tous les numéros de compte pour voir
-					// Faire une boucle pour essayer de créer un numéro de
-					// compte jusqu'à ce qu'il soit valide
-
-					account.setNumber(number_);
-
-					account.setCustomer_id(customer.getId());
-
-					try {
-						srvAccount.save(account);
-					} catch (SrvException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
-				}
-
-			}
-
+		if (amount > 0) {
+			account.setSummary(new Double(amount));
+		} else {
+			throw new Exception("A new account can't have a negative balance");
 		}
+
+		SrvAccount srvaccount = SrvAccount.getInstance(SQLiteManager.getInstance());
+		SrvAccount.getInstance(SQLiteManager.getInstance()).save(account);
 
 	}
 

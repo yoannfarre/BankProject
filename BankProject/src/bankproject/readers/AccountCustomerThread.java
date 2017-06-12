@@ -36,7 +36,12 @@ public class AccountCustomerThread extends Thread {
 
 		while (true) { // TODO Ajouter une condition de sortie
 
-			AccountCustomerReader Acr = new AccountCustomerReader();
+			try {
+				AccountCustomerReader Acr = new AccountCustomerReader();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			try {
 				Thread.sleep(time);

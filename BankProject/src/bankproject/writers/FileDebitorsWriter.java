@@ -56,6 +56,7 @@ public class FileDebitorsWriter extends AbstractWriter {
 		}
 
 		output.println(writeFirstLine());
+		
 		for (Statement statement : results) {
 			output.println(statement.toString());
 		}

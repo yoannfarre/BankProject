@@ -6,8 +6,8 @@ public class CustomerStatementThread extends Thread {
 	 *********** Attributes ***********
 	 ********************************/
 
-	static int time = 2000; // 2 sec in ms
-	static int delay = 2000;// delaytime on launching
+	private static int time = 2000; // 2 sec in ms
+	private static int delay = 2000;// delaytime on launching
 
 	/********************************
 	 *********** Main test **********

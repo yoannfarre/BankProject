@@ -121,6 +121,7 @@ public class FileCustomerWriter extends AbstractWriter {
 		}
 
 		output.println(writeFirstLine());
+		
 		for (Statement statement : results) {
 			output.println(statement.toString());
 		}

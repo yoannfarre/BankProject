@@ -6,7 +6,7 @@ public class AccountCustomerThread extends Thread {
 	 ********** Attributes **********
 	 ********************************/
 
-	int time = 60000 * 7; // 7 minutes
+	private int time = 60000 * 7; // 7 minutes
 
 	/********************************
 	 ********** Test Main ***********

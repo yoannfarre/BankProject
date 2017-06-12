@@ -60,6 +60,7 @@ public class FileCreditorsWriter extends AbstractWriter {
 		}
 
 		output.println(writeFirstLine());
+		
 		for (Statement statement : results) {
 			output.println(statement.toString());
 		}

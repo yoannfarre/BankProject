@@ -12,9 +12,9 @@ public abstract class AbstractReader extends Thread {
 	 ********** Attributes **********
 	 ********************************/
 
-	File file;
-	BufferedReader input = null;
-	Boolean fileexist = false;
+	protected File file;
+	protected BufferedReader input = null;
+	protected Boolean fileexist = false;
 	
 	/********************************
 	 ********** Builders ************

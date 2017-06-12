@@ -11,8 +11,8 @@ public abstract class AbstractWriter {
 	 ********** Attributes **********
 	 ********************************/
 
-	PrintWriter output = null;
-	File file;
+	protected PrintWriter output = null;
+	protected File file;
 	
 	/********************************
 	 *********** Builders ***********

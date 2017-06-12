@@ -6,8 +6,8 @@ public class BankStatmentThread extends Thread {
 	 ********** Attributes **********
 	 ********************************/
 
-	static int time = 60000 * 13; // 13 minutes en ms
-	static int delay = 2000; // delaytime 1s;
+	private static int time = 60000 * 13; // 13 minutes en ms
+	private static int delay = 2000; // delaytime 1s;
 	
 	/********************************
 	 ********** Main test ***********

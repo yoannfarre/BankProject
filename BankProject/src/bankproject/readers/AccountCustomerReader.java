@@ -80,8 +80,8 @@ public class AccountCustomerReader extends AbstractReader { // TODO Corriger
 			}
 			i++;
 		}
-		
-		System.out.println("AccountCustomer : Lines added : " + (i-1));
+
+		System.out.println("AccountCustomer : Lines added : " + (i - 1));
 		sc.close();
 
 	}
@@ -91,10 +91,15 @@ public class AccountCustomerReader extends AbstractReader { // TODO Corriger
 	}
 
 	private void saveAccount(Customer customer, CountryEnum country, Integer amount) throws Exception {
+
 		Account account = new Account();
 		account.setCustomer_id(customer.getId());
 		account.setCountry(country);
-		account.setNumber(account.buildNumber(country));
+
+		do {
+			String new_number = account.buildNumber(country);
+			account.setNumber(new_number);
+		} while (SrvAccount.getInstance(SQLiteManager.getInstance()).getByNumber(account.getNumber()) != null);
 
 		if (amount > 0) {
 			account.setSummary(new Double(amount));

@@ -7,11 +7,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
 import bankproject.entities.Account;
 import bankproject.entities.Customer;
 import bankproject.entities.Operation;
+import bankproject.enumerations.CountryEnum;
 import bankproject.enumerations.TypeOperationEnum;
 import bankproject.exceptions.SrvException;
 import bankproject.services.SQLiteManager;
@@ -56,223 +58,67 @@ public class OperationReader extends AbstractReader {
 
 	}
 
-	public void readSpecificFile() {
+	public void readSpecificFile() throws Exception {
 
-		// LinkedHashMap<Customer, LinkedHashMap<Account, Operation>>
-		// customer_accop_map = new LinkedHashMap<>();
-		LinkedHashMap<Account, Operation> account_operation_map = new LinkedHashMap<>();
-		LinkedHashSet<Account> account_set = new LinkedHashSet<>();
+		Scanner sc = new Scanner(file);
+		int i = 0;
 
-		while (true) {
-			String ligne = null;
-			try {
-				ligne = input.readLine();
-			} catch (IOException e) {
-				System.err.println("# Erreur pendant la lecture de \"" + file + "\".");
-				System.exit(1);
+		while (sc.hasNextLine()) {
+			String line = sc.nextLine();
+			if (i > 0) {
+
+				Scanner line_scanner = new Scanner(line);
+				Double amount = line_scanner.nextDouble();
+				String number = line_scanner.next().trim();
+				String firstname = line_scanner.next();
+				String lastname = line_scanner.next();
+				line_scanner.close();
+
+				saveOperation(amount, number, firstname, lastname);
 			}
-			if (ligne == null) {
-				// condition de sortie de boucle infinie
-				break;
-			}
-
-			// Interprétation des infos de chaque ligne du fichier
-
-			StringTokenizer st = new StringTokenizer(ligne, "\t\t\t");
-			Customer customer = new Customer();
-			Account account = new Account();
-			Operation operation = new Operation();
-			int count = 0;
-			boolean firstlineboolean = false;
-
-			while (st.hasMoreTokens()) {
-
-				String field = st.nextToken();
-
-				// Saute la première ligne
-
-				// TODO Travailler evec l'Enum des mots de première ligne pour
-				// simplifier le code
-
-				if (field.equals("Amount") || field.equals("Account") || field.equals("Customer")) {
-					firstlineboolean = true;
-					continue;
-				} else {
-
-					switch (count) {
-					case 0:
-						StringBuilder amount_sb = new StringBuilder();
-						// Prise du premier caractère pour déterminer le type
-						// d'opération
-						if (field.charAt(0) == '+') {
-							operation.setType_operation(TypeOperationEnum.CREDIT);
-
-						} else if (field.charAt(0) == '-') {
-							operation.setType_operation(TypeOperationEnum.DEBIT);
-
-						}
-						// Parcours de la chaine à l'exception du premier
-						// caractère
-						for (int i = 1; i < field.length(); i++) {
-							amount_sb.append(field.charAt(i));
-						}
-
-						operation.setAmount(Double.parseDouble(amount_sb.toString()));
-
-						break;
-
-					case 1:
-						account.setNumber(field);
-						break;
-					case 2:
-
-						StringTokenizer name_st = new StringTokenizer(field, " ");
-						int count2 = 0;
-
-						while (name_st.hasMoreTokens()) {
-
-							String inname = name_st.nextToken();
-
-							if (count2 == 0) {
-
-								customer.setFirstname(inname);
-
-							} else if (count2 == 1) {
-
-								customer.setLastname(inname);
-
-							}
-
-							count2++;
-
-						}
-						break;
-
-					}
-
-				}
-
-				count++;
-			}
-
-			if (firstlineboolean == false) {
-
-				account_set.add(account);
-				account_operation_map.put(account, operation);
-
-			}
-
+			i++;
 		}
 
-		// Partie remplissage de base
+		sc.close();
 
-		// Remplissage BDD Table Customer
+	}
 
-		SrvCustomer srvCustomer = SrvCustomer.getInstance(SQLiteManager.getInstance());
+	private void saveOperation(Double amount, String number, String firstname, String lastname) throws Exception {
 
+		Customer customer = SrvCustomer.getInstance(SQLiteManager.getInstance()).get(firstname, lastname);
+		Account account = SrvAccount.getInstance(SQLiteManager.getInstance()).getByNumber(number);
 
-		SrvAccount srvAccount = SrvAccount.getInstance(SQLiteManager.getInstance());
+		Date date = new Date();
+		SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
+		try {
 
-		SrvOperation srvOperation = SrvOperation.getInstance(SQLiteManager.getInstance());
+			if ((account.getCustomer_id() == customer.getId())) {
 
+				account.updateSummary(amount);
 
-		for (Account account : account_set) {
+				Operation operation = new Operation();
 
-			// pour info
-			// LinkedHashMap<Customer, LinkedHashMap<Account, Operation>>
-			// customer_accop_map = new LinkedHashMap<>();
-			// LinkedHashMap<Account, Operation> account_operation_map = new
-			// LinkedHashMap<>();
-			// LinkedHashSet<Customer> customer_set = new LinkedHashSet<>();
-
-			// Verifier si le compte existe et récuperation ID
-
-			// TODO : il faudrait vérifier que le compte appartient eu bon
-			// Customer
-
-			boolean existaccount = false;
-
-			if (account.getNumber() != null) {
-
-				try {
-
-					Account account_up = srvAccount.get(account.getNumber());
-					account.setId(account_up.getId());
-					account.setSummary(account_up.getSummary());
-					account.setCountry(account_up.getCountry());
-					account.setCustomer_id(account_up.getCustomer_id());
-					existaccount = true;
-
-				} catch (Exception e1) {
-					existaccount = false;
-					System.out.println("Le compte " + account.getNumber() + " n'existe pas");
-
-					// TODO Il faut sortir de la boucle
-					continue;
-				}
-
-			}
-
-			// Mise à jour du compte
-
-			if (existaccount == true) {
-
-				double sum = account.getSummary();
-
-				if (account_operation_map.get(account).getType_operation() == TypeOperationEnum.DEBIT) {
-					account.setSummary(sum - account_operation_map.get(account).getAmount());
-				}
-
-				else if (account_operation_map.get(account).getType_operation() == TypeOperationEnum.CREDIT) {
-					account.setSummary(sum + account_operation_map.get(account).getAmount());
-				}
-
-				try {
-					srvAccount.save(account);
-				} catch (SrvException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-			}
-
-			// Création de l'opération dans DB
-
-			if (existaccount == true) { // même condition que précédemment
-
-				Operation operation = account_operation_map.get(account);
-				Date date = new Date();
-
-				SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-
-				// System.out.println("Current Date: " + ft.format(date));
-
-				operation.setAccount_id(account.getId());
-				operation.setCustomer_id(account.getCustomer_id());
 				operation.setDate(ft.format(date));
+				operation.setCustomer_id(customer.getId());
+				operation.setType_operation(amount > 0 ? TypeOperationEnum.CREDIT : TypeOperationEnum.DEBIT);
+				operation.setAccount_id(account.getId());
+				operation.setAmount(amount);
 
-				try {
-					srvOperation.save(operation);
-				} catch (SrvException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				//
-				// }
+				SrvOperation srvoperation = SrvOperation.getInstance(SQLiteManager.getInstance());
+				SrvOperation.getInstance(SQLiteManager.getInstance()).save(operation);
 
-				// }
-				//
-				// }
+				SrvAccount srvaccount = SrvAccount.getInstance(SQLiteManager.getInstance());
+				SrvAccount.getInstance(SQLiteManager.getInstance()).save(account);
 
+			} else {
+				System.out.println("The account doesn't match the good customer");
 			}
+
+		} catch (Exception e) {
+			System.out.println("The account " + number + " doesn't exist.");
 		}
 
 	}
+
 }

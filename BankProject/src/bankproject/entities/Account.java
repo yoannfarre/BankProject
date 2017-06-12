@@ -15,7 +15,7 @@ public class Account extends AbstractEntity {
 	private Integer customer_id;
 	private Double summary;
 	private CountryEnum country;
-	private static Collection<Account> accountset;
+	private static Collection<Account> accountset; //TODO
 
 	/********************************
 	 ********** Test Main ***********
@@ -139,6 +139,10 @@ public class Account extends AbstractEntity {
 			break;
 		}
 
+	}
+
+	public void updateSummary(Double amount) {
+		summary = getSummary() + amount;
 	}
 
 }

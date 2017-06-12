@@ -4,6 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
 
 import bankproject.entities.AbstractEntity;
 import bankproject.entities.Account;
@@ -153,7 +157,7 @@ public class SrvAccount extends AbstractService {
 	
 	
 
-	public Account get(String number_) throws Exception {
+	public Account getByNumber(String number_) throws Exception {
 
 		Connection connexion = null;
 		PreparedStatement pst = null;
@@ -190,7 +194,8 @@ public class SrvAccount extends AbstractService {
 		return result;
 
 	}
-
+	
+	
 	// (id, country, number, customer_id, summary)
 
 }

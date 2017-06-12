@@ -5,7 +5,7 @@ public class OperationThread extends Thread {
 	/********************************
 	 ********** Attributes **********
 	 ********************************/
-	private int delay = 2000; // Delaytime 1s
+	private int delay = 2000; // Delaytime 2s
 	private int time = 60000 * 11; // 11 minutes
 
 	/********************************

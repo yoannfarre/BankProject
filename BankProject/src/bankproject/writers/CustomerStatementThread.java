@@ -6,8 +6,8 @@ public class CustomerStatementThread extends Thread {
 	 *********** Attributes ***********
 	 ********************************/
 
-	private static int time = 2000; // 2 sec in ms
-	private static int delay = 2000;// delaytime on launching
+	private static int time = 2000; // 2 sec in ms : 7 sec en tout
+	private static int delay = 5000;// delaytime on launching
 
 	/********************************
 	 *********** Main test **********
@@ -35,16 +35,10 @@ public class CustomerStatementThread extends Thread {
 	public void run() {
 
 		while (true) { // TODO Ajouter une condition de sortie
-			
-			try { //delay time on launching
+
+			try { // delay time on launching
 				Thread.sleep(delay);
-			} catch (InterruptedException ie) {
-				continue; // Recommencer en début de boucle
-			}
-
-			FileCustomerWriter fcw = new FileCustomerWriter();
-
-			try {
+				FileCustomerWriter fcw = new FileCustomerWriter();
 				Thread.sleep(time);
 			} catch (InterruptedException ie) {
 				continue; // Recommencer en début de boucle

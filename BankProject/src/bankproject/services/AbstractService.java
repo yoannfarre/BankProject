@@ -135,4 +135,8 @@ public abstract class AbstractService {
 	protected abstract AbstractEntity populateEntity(ResultSet rs) throws SQLException, Exception;
 
 	public abstract String createTableInDB();
+
+	public String dropTableInDB(){
+		return null;
+	}
 }

@@ -23,7 +23,6 @@ public class OperationThread extends Thread {
 
 	public OperationThread(String name) {
 		super(name);
-		System.out.println("statut du thread " + name + " = " + this.getState());
 		this.start();
 		System.out.println("statut du thread " + name + " = " + this.getState());
 	}

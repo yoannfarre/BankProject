@@ -143,6 +143,15 @@ public class SrvAccount extends AbstractService {
 
 		return sb.toString();
 	}
+	
+	public String dropTableInDB() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("DROP TABLE IF EXISTS Account");
+
+		return sb.toString();
+	}
+	
+	
 
 	public Account get(String number_) throws Exception {
 

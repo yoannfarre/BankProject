@@ -65,7 +65,7 @@ public class AccountCustomerReader extends AbstractReader { // TODO Corriger
 			String line = sc.nextLine();
 			if (i > 0) {
 				Scanner line_scanner = new Scanner(line);
-				CountryEnum country = CountryEnum.getByLongName(line_scanner.next().trim());
+				CountryEnum country = CountryEnum.getByLongNameFrench(line_scanner.next().trim());
 				String lastName = line_scanner.next().trim();
 				String firstName = line_scanner.next().trim();
 				Integer amount = line_scanner.nextInt();
@@ -80,20 +80,21 @@ public class AccountCustomerReader extends AbstractReader { // TODO Corriger
 			}
 			i++;
 		}
+		
+		System.out.println("AccountCustomer : Lines added : " + (i-1));
+		sc.close();
 
 	}
 
 	private void saveCustomer(String firstName, String lastName) throws Exception {
-		SrvCustomer srvcustomer = SrvCustomer.getInstance(SQLiteManager.getInstance());
-		Customer customer = srvcustomer.get(firstName, lastName);
-		srvcustomer.save(customer);
+		Customer customer = SrvCustomer.getInstance(SQLiteManager.getInstance()).getOrCreateByName(firstName, lastName);
 	}
 
 	private void saveAccount(Customer customer, CountryEnum country, Integer amount) throws Exception {
 		Account account = new Account();
 		account.setCustomer_id(customer.getId());
 		account.setCountry(country);
-		account.buildNumber(country);
+		account.setNumber(account.buildNumber(country));
 
 		if (amount > 0) {
 			account.setSummary(new Double(amount));

@@ -5,17 +5,19 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public abstract class AbstractReader extends Thread {
-	
+
 	/********************************
 	 ********** Attributes **********
 	 ********************************/
 
 	protected File file;
 	protected BufferedReader input = null;
-	protected Boolean fileexist = false;
-	
+
 	/********************************
 	 ********** Builders ************
 	 ********************************/
@@ -23,7 +25,7 @@ public abstract class AbstractReader extends Thread {
 	public AbstractReader() {
 
 	}
-	
+
 	/********************************
 	 ********** Methods *************
 	 ********************************/
@@ -42,21 +44,12 @@ public abstract class AbstractReader extends Thread {
 
 	protected void readFile() throws Exception {
 
-		if (!file.exists()) {
-			System.err.println("# Error : \"" + getFileInputPath() + "\" n'existe pas.");
-			fileexist = false;
-			// System.exit(1);
-		} else {
-			fileexist = true;
-		}
-
-		if (fileexist) {
+		if (file.exists()) {
 
 			try {
 				input = new BufferedReader(new FileReader(file));
 			} catch (FileNotFoundException e) {
-				System.err.println("# Error : impossible to read \"" + file + "\".");
-				// System.exit(1);
+
 			}
 
 			readSpecificFile();
@@ -69,6 +62,11 @@ public abstract class AbstractReader extends Thread {
 			}
 
 			deleteFile(file);
+			
+		} else {
+			Date date = new Date();
+			String sDate = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL, Locale.FRANCE).format(date);
+			System.out.println(sDate + " : No File " + file.getPath() + " to read");
 		}
 
 	}

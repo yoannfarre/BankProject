@@ -30,7 +30,7 @@ public class SrvOperation extends AbstractService {
 	 *********** Getters ************
 	 ********************************/
 
-	public static SrvOperation getInstance (DatabaseManager dbm) {
+	public static SrvOperation getInstance(DatabaseManager dbm) {
 		if (INSTANCE.getDbManager() == null) {
 			INSTANCE.setDbManager(dbm);
 		}
@@ -148,6 +148,13 @@ public class SrvOperation extends AbstractService {
 		sb.append("customer_id INTEGER NOT NULL, ");
 		sb.append("date TEXT NOT NULL ");
 		sb.append(")");
+
+		return sb.toString();
+	}
+
+	public String dropTableInDB() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("DROP TABLE IF EXISTS Operation");
 
 		return sb.toString();
 	}

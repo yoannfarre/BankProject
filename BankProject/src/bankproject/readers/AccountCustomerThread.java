@@ -23,7 +23,6 @@ public class AccountCustomerThread extends Thread {
 
 	public AccountCustomerThread(String name) {
 		super(name);
-		System.out.println("statut du thread " + name + " = " + this.getState());
 		this.start();
 		System.out.println("statut du thread " + name + " = " + this.getState());
 	}

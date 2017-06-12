@@ -24,7 +24,6 @@ public class BankStatmentThread extends Thread {
 
 	public BankStatmentThread(String name) {
 		super(name);
-		System.out.println("statut du thread " + name + " = " + this.getState());
 		this.start();
 		System.out.println("statut du thread " + name + " = " + this.getState());
 	}

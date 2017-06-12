@@ -122,8 +122,18 @@ public class SrvCustomer extends AbstractService {
 
 	public String createTableInDB() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("CREATE TABLE IF NOT EXISTS Customer ( ").append("id INTEGER PRIMARY KEY AUTOINCREMENT, ")
-				.append("firstname TEXT, ").append("lastname TEXT ").append(")");
+		sb.append("CREATE TABLE IF NOT EXISTS Customer ( ");
+		sb.append("id INTEGER PRIMARY KEY AUTOINCREMENT, ");
+		sb.append("firstname TEXT, ");
+		sb.append("lastname TEXT ");
+		sb.append(")");
+
+		return sb.toString();
+	}
+	
+	public String dropTableInDB() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("DROP TABLE IF EXISTS Customer;");
 
 		return sb.toString();
 	}
@@ -167,5 +177,17 @@ public class SrvCustomer extends AbstractService {
 		}
 		return result;
 
+	}
+	
+	public Customer getOrCreateByName(String firstname, String lastname) throws Exception {
+		Customer customer = get(firstname, lastname);
+		if (customer == null) {
+			customer = new Customer();
+			customer.setLastname(lastname);
+			customer.setFirstname(firstname);
+			this.create(customer);
+		}
+		
+		return customer;
 	}
 }

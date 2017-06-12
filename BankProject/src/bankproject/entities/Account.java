@@ -38,28 +38,9 @@ public class Account extends AbstractEntity {
 
 		StringBuilder sb = new StringBuilder();
 		int digit, i;
-
-		switch (country) {
-
-		case SPAIN:
-			sb.append("ES");
-			break;
-		case FRANCE:
-			sb.append("FR");
-			break;
-		case BRITAIN:
-			sb.append("GB");
-			break;
-		case GERMANY:
-			sb.append("DE");
-			break;
-		case BELGIUM:
-			sb.append("BE");
-			break;
-		case NEDERLANDS:
-			sb.append("NL");
-			break;
-		}
+		
+		String letters = country.getShortCode();
+		sb.append(letters);
 
 		for (i = 1; i < 7; i++) {
 

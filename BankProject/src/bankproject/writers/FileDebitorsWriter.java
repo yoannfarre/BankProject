@@ -32,7 +32,7 @@ public class FileDebitorsWriter extends AbstractWriter {
 		File dir = new File(dirPath);
 		if (dir.exists()) {
 			dir.mkdirs();
-			System.err.println("# Warning : \"" + dir.getName() + "\" was overridden.");
+			System.out.println("# News : \"" + dir.getName() + "\" was overridden.");
 		}
 		return dirPath;
 	}

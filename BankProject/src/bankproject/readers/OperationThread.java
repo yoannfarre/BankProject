@@ -5,7 +5,7 @@ public class OperationThread extends Thread {
 	/********************************
 	 ********** Attributes **********
 	 ********************************/
-
+	int delay = 2000; // Delaytime 1s
 	int time = 60000 * 11; // 11 minutes
 
 	/********************************
@@ -35,6 +35,12 @@ public class OperationThread extends Thread {
 	public void run() {
 
 		while (true) { // TODO Ajouter une condition de sortie
+			
+			try { //delay time on launching
+				Thread.sleep(delay);
+			} catch (InterruptedException ie) {
+				continue; // Recommencer en début de boucle
+			}
 
 			OperationReader or = new OperationReader();
 

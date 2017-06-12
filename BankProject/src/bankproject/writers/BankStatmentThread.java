@@ -7,6 +7,7 @@ public class BankStatmentThread extends Thread {
 	 ********************************/
 
 	static int time = 60000 * 13; // 13 minutes en ms
+	static int delay = 2000; // delaytime 1s;
 	
 	/********************************
 	 ********** Main test ***********
@@ -35,6 +36,12 @@ public class BankStatmentThread extends Thread {
 	public void run() {
 
 		while (true) { // TODO Ajouter une condition de sortie
+			
+			try { //delay time on launching
+				Thread.sleep(delay);
+			} catch (InterruptedException ie) {
+				continue; // Recommencer en début de boucle
+			}
 
 			FileCountryWriter fcw = new FileCountryWriter();
 

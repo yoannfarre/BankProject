@@ -1,6 +1,6 @@
 Bank statements for creditors
 Date				Amount		Type_operation		Country		Number		Summary	FirstName	LastName
+2017-06-03 15:43:19.011		1000.0		CREDIT			BRITAIN		GB048126	4400.0		David		Beckham
 2017-06-03 15:49:56.291		1000.0		CREDIT			BRITAIN		GB048126	4400.0		David		Beckham
 2017-06-03 15:49:30.809		1000.0		CREDIT			BRITAIN		GB048126	4400.0		David		Beckham
-2017-06-03 15:43:19.011		1000.0		CREDIT			BRITAIN		GB048126	4400.0		David		Beckham
 2017-06-04 10:08:30.483		1000.0		CREDIT			BRITAIN		GB048126	4400.0		David		Beckham

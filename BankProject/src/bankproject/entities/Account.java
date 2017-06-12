@@ -1,5 +1,7 @@
 package bankproject.entities;
 
+import java.util.Collection;
+
 import bankproject.enumerations.CountryEnum;
 
 public class Account extends AbstractEntity {
@@ -13,6 +15,7 @@ public class Account extends AbstractEntity {
 	private Integer customer_id;
 	private Double summary;
 	private CountryEnum country;
+	private static Collection<Account> accountset;
 
 	/********************************
 	 ********** Test Main ***********

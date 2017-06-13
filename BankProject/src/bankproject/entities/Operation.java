@@ -65,15 +65,10 @@ public class Operation extends AbstractEntity {
 
 	public void setType_operation(String type_op) {
 
-		switch (type_op) {
+		TypeOperationEnum typeopenum = TypeOperationEnum.getType_operationByString(type_op);
 
-		case "DEBIT":
-			this.type_operation = TypeOperationEnum.DEBIT;
-			break;
-		case "CREDIT":
-			this.type_operation = TypeOperationEnum.CREDIT;
-			break;
-		}
+		this.type_operation = typeopenum;
+
 	}
 
 	public void setCustomer_id(Integer customer_id) {

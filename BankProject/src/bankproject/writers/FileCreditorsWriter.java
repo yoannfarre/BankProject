@@ -2,7 +2,7 @@ package bankproject.writers;
 
 import java.io.File;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 
 import bankproject.entities.Statement;
 import bankproject.enumerations.TypeOperationEnum;
@@ -42,7 +42,7 @@ public class FileCreditorsWriter extends AbstractWriter {
 		SrvStatement srvStatement = SrvStatement.getInstance();
 		srvStatement.setDbManager(SQLiteManager.getInstance());
 
-		Collection<Statement> results = new HashSet<>();
+		Collection<Statement> results = new LinkedHashSet<>();
 
 		output.println("Bank statements for creditors");
 
@@ -53,7 +53,7 @@ public class FileCreditorsWriter extends AbstractWriter {
 		TypeOperationEnum type = TypeOperationEnum.CREDIT;
 
 		try {
-			results = srvStatement.requestStatementsCreditors(type);
+			results = srvStatement.requestStatementsByType(type);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

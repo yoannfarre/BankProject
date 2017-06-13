@@ -73,7 +73,7 @@ public abstract class AbstractWriter {
 		firstline.append("Type_operation		");
 		firstline.append("Country		");
 		firstline.append("Number		");
-		firstline.append("Summary	");
+		firstline.append("Summary		");
 		firstline.append("FirstName	");
 		firstline.append("LastName");
 		

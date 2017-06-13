@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 
 import bankproject.entities.AbstractEntity;
 import bankproject.entities.Statement;
@@ -57,12 +58,12 @@ public class SrvStatement extends AbstractService {
 		return statement;
 	}
 
-	public Collection<Statement> requestStatementsCreditors(TypeOperationEnum type) throws Exception {
+	public Collection<Statement> requestStatementsByType(TypeOperationEnum type) throws Exception {
 
 		Connection connexion = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
-		Collection<Statement> results = new HashSet<>();
+		Collection<Statement> results = new LinkedHashSet<>();
 
 		StringBuilder query = new StringBuilder("SELECT ");
 		query.append("Operation.date, Operation.amount, ");
@@ -72,8 +73,7 @@ public class SrvStatement extends AbstractService {
 		query.append("INNER JOIN Account ON Account.id = Operation.account_id ");
 		query.append("INNER JOIN Customer ON Customer.id = Operation.customer_id ");
 		query.append("WHERE Operation.type_operation = ? ");
-		query.append("ORDER BY Operation.date; "); // TODO améliorer le
-													// classement
+		query.append("ORDER BY Operation.date ; "); 
 
 		try {
 			connexion = getDbManager().getConnection();
@@ -107,7 +107,7 @@ public class SrvStatement extends AbstractService {
 		Connection connexion = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
-		Collection<Statement> results = new HashSet<>();
+		Collection<Statement> results = new LinkedHashSet<>();
 
 		StringBuilder query = new StringBuilder("SELECT ");
 		query.append("Operation.date, Operation.amount, ");
@@ -117,8 +117,7 @@ public class SrvStatement extends AbstractService {
 		query.append("INNER JOIN Account ON Account.id = Operation.account_id ");
 		query.append("INNER JOIN Customer ON Customer.id = Operation.customer_id ");
 		query.append("WHERE Account.country = ? ");
-		// query.append("ORDER BY Customer.lastname ;"); TODO améliorer le
-		// classement
+		query.append("ORDER BY Operation.date ;"); 
 
 		try {
 			connexion = getDbManager().getConnection();
@@ -152,7 +151,7 @@ public class SrvStatement extends AbstractService {
 		Connection connexion = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
-		Collection<Statement> results = new HashSet<>();
+		Collection<Statement> results = new LinkedHashSet<>();
 
 		StringBuilder query = new StringBuilder("SELECT ");
 		query.append("Operation.date, Operation.amount, ");
@@ -162,8 +161,7 @@ public class SrvStatement extends AbstractService {
 		query.append("INNER JOIN Account ON Account.id = Operation.account_id ");
 		query.append("INNER JOIN Customer ON Customer.id = Operation.customer_id ");
 		query.append("WHERE (Customer.firstname = ? AND Customer.lastname = ?) ");
-		query.append("ORDER BY Operation.date; "); // TODO améliorer le
-													// classement
+		query.append("ORDER BY Operation.date ;"); 
 
 		try {
 			connexion = getDbManager().getConnection();

@@ -2,7 +2,7 @@ package bankproject.writers;
 
 import java.io.File;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
@@ -103,7 +103,7 @@ public class FileCustomerWriter extends AbstractWriter {
 		SrvStatement srvStatement = SrvStatement.getInstance();
 		srvStatement.setDbManager(SQLiteManager.getInstance());
 
-		Collection<Statement> results = new HashSet<>();
+		Collection<Statement> results = new LinkedHashSet<>();
 
 		StringBuilder sb_sentence1 = new StringBuilder();
 		sb_sentence1.append("Bank statements for " + firstname + " " + lastname);

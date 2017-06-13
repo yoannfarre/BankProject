@@ -2,7 +2,7 @@ package bankproject;
 
 import bankproject.readers.AccountCustomerThread;
 import bankproject.readers.OperationThread;
-import bankproject.writers.BankStatmentThread;
+import bankproject.writers.BankStatementThread;
 import bankproject.writers.CustomerStatementThread;
 
 public class Main {
@@ -19,7 +19,7 @@ public class Main {
 
 		OperationThread ot = new OperationThread("B");
 
-		BankStatmentThread bst = new BankStatmentThread("C");
+		BankStatementThread bst = new BankStatementThread("C");
 
 		CustomerStatementThread cst = new CustomerStatementThread("D");
 

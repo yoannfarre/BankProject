@@ -2,7 +2,7 @@ package bankproject.writers;
 
 import java.io.File;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 
 import bankproject.entities.Statement;
 import bankproject.enumerations.CountryEnum;
@@ -42,7 +42,7 @@ public class FileCountryWriter extends AbstractWriter {
 		SrvStatement srvStatement = SrvStatement.getInstance();
 		srvStatement.setDbManager(SQLiteManager.getInstance());
 
-		Collection<Statement> results = new HashSet<>();
+		Collection<Statement> results = new LinkedHashSet<>();
 
 		output.println("Bank statements ordered by country");
 

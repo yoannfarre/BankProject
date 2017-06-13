@@ -1,6 +1,6 @@
 package bankproject.writers;
 
-public class BankStatmentThread extends Thread {
+public class BankStatementThread extends Thread {
 	
 	/********************************
 	 ********** Attributes **********
@@ -15,14 +15,14 @@ public class BankStatmentThread extends Thread {
 
 	public static void main(String[] args) {
 
-		BankStatmentThread act = new BankStatmentThread("C");
+		BankStatementThread act = new BankStatementThread("C");
 	}
 	
 	/********************************
 	 *********** Builders ***********
 	 ********************************/
 
-	public BankStatmentThread(String name) {
+	public BankStatementThread(String name) {
 		super(name);
 		this.start();
 		System.out.println("statut du thread " + name + " = " + this.getState());

@@ -101,63 +101,22 @@ public class Statement extends AbstractEntity {
 
 	public void setCountry(String country_) {
 
-		// TODO On doit pouvoir faire mieux en intégrant les différentes
-		// possibilités à CountryEnum
-		// TODO Possibilité d'ajouter une interface pour utiliser cette méthode
-		// dans Account et Statement sans la réécrire
+		CountryEnum countryenum = CountryEnum.getByLongNameEnglish(country_);
 
-		switch (country_) {
-
-		case "SPAIN":
-			this.country = CountryEnum.SPAIN;
-			break;
-		case "FRANCE":
-			this.country = CountryEnum.FRANCE;
-			break;
-		case "NEDERLANDS":
-			this.country = CountryEnum.NEDERLANDS;
-			break;
-		case "PAYS-BAS":
-			this.country = CountryEnum.NEDERLANDS;
-			break;
-		case "GERMANY":
-			this.country = CountryEnum.GERMANY;
-			break;
-		case "ALLEMAGNE":
-			this.country = CountryEnum.GERMANY;
-			break;
-		case "BELGIUM":
-			this.country = CountryEnum.BELGIUM;
-			break;
-		case "BELGIQUE":
-			this.country = CountryEnum.BELGIUM;
-			break;
-		case "BRITAIN":
-			this.country = CountryEnum.BRITAIN;
-			break;
-		case "GRANDE-BRETAGNE":
-			this.country = CountryEnum.BRITAIN;
-			break;
+		if (countryenum == null) {
+			countryenum = CountryEnum.getByLongNameFrench(country_);
 		}
+
+		this.country = countryenum;
 
 	}
 
 	public void setType_operation(String type_op) {
 
-		// TODO On doit pouvoir faire mieux en intégrant les différentes
-		// possibilités à CountryEnum
-		// TODO Possibilité d'ajouter une interface pour utiliser cette méthode
-		// dans Account et Statement sans la réécrire
+		TypeOperationEnum typeopenum = TypeOperationEnum.getType_operationByString(type_op);
 
-		switch (type_op) {
+		this.type_operation = typeopenum;
 
-		case "DEBIT":
-			this.type_operation = TypeOperationEnum.DEBIT;
-			break;
-		case "CREDIT":
-			this.type_operation = TypeOperationEnum.CREDIT;
-			break;
-		}
 	}
 
 	// Operation.date, Operation.amount, Operation.type_operation,
@@ -177,7 +136,7 @@ public class Statement extends AbstractEntity {
 		statement_string.append(this.getType_operation() + "			");
 		statement_string.append(this.getCountry() + "		");
 		statement_string.append(this.getNumber() + "	");
-		statement_string.append(this.getSummary() + "		");
+		statement_string.append(this.getSummary() + "			");
 		statement_string.append(this.getFirstname() + "		");
 		statement_string.append(this.getLastname());
 

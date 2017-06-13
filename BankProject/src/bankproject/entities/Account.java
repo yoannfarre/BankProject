@@ -15,7 +15,7 @@ public class Account extends AbstractEntity {
 	private Integer customer_id;
 	private Double summary;
 	private CountryEnum country;
-	private static Collection<Account> accountset; //TODO
+	private static Collection<Account> accountset; // TODO
 
 	/********************************
 	 ********** Test Main ***********
@@ -38,7 +38,7 @@ public class Account extends AbstractEntity {
 
 		StringBuilder sb = new StringBuilder();
 		int digit, i;
-		
+
 		String letters = country.getShortCode();
 		sb.append(letters);
 
@@ -102,42 +102,13 @@ public class Account extends AbstractEntity {
 
 	public void setCountry(String country_) {
 
-		// TODO On doit pouvoir faire mieux en intégrant les différentes
-		// possibilités à CountryEnum
+		CountryEnum countryenum = CountryEnum.getByLongNameEnglish(country_);
 
-		switch (country_) {
-
-		case "SPAIN":
-			this.country = CountryEnum.SPAIN;
-			break;
-		case "FRANCE":
-			this.country = CountryEnum.FRANCE;
-			break;
-		case "NEDERLANDS":
-			this.country = CountryEnum.NEDERLANDS;
-			break;
-		case "PAYS-BAS":
-			this.country = CountryEnum.NEDERLANDS;
-			break;
-		case "GERMANY":
-			this.country = CountryEnum.GERMANY;
-			break;
-		case "ALLEMAGNE":
-			this.country = CountryEnum.GERMANY;
-			break;
-		case "BELGIUM":
-			this.country = CountryEnum.BELGIUM;
-			break;
-		case "BELGIQUE":
-			this.country = CountryEnum.BELGIUM;
-			break;
-		case "BRITAIN":
-			this.country = CountryEnum.BRITAIN;
-			break;
-		case "GRANDE-BRETAGNE":
-			this.country = CountryEnum.BRITAIN;
-			break;
+		if (countryenum == null) {
+			countryenum = CountryEnum.getByLongNameFrench(country_);
 		}
+
+		this.country = countryenum;
 
 	}
 

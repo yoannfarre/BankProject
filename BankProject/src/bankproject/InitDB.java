@@ -13,11 +13,11 @@ import bankproject.services.SrvOperation;
 public class InitDB {
 
 	public static void main(String[] args) throws Exception {
-		
+
 		InitDB ini = new InitDB();
 
 		ini.deleteTables();
-		
+
 	}
 
 	public void deleteTables() throws Exception {
@@ -43,12 +43,6 @@ public class InitDB {
 
 		}
 	}
-		
-	
-		
-		
-		
-	
 
 	public InitDB() throws Exception {
 

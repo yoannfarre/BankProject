@@ -142,7 +142,8 @@ public class SrvAccount extends AbstractService {
 		sb.append("country VARCHAR(30) NOT NULL, ");
 		sb.append("number VARCHAR(30) NOT NULL, ");
 		sb.append("customer_id INTEGER NOT NULL, ");
-		sb.append("summary DOUBLE NOT NULL ");
+		sb.append("summary DOUBLE NOT NULL, ");
+		sb.append("CONSTRAINT fk_account_customer_id FOREIGN KEY (customer_id) REFERENCES Customer(id) ON DELETE CASCADE ");
 		sb.append(")");
 
 		return sb.toString();

@@ -37,7 +37,13 @@ public abstract class AbstractReader extends Thread {
 	public String getFileInputPrimaryPath() {
 
 		String fs = System.getProperty("file.separator");
-		String dirPath = System.getProperty("user.dir") + fs + "tmp" + fs + "bank" + fs + "input" + fs;
+		String os = System.getProperty("os.name");
+		String dirPath;
+		if (os.substring(0, 7).toLowerCase().equals("windows")) {
+			dirPath = "C:" + fs + "tmp" + fs + "bank" + fs + "input" + fs;
+		} else {
+			dirPath = fs + "tmp" + fs + "bank" + fs + "input" + fs;
+		}
 		return dirPath;
 
 	}
@@ -62,7 +68,7 @@ public abstract class AbstractReader extends Thread {
 			}
 
 			deleteFile(file);
-			
+
 		} else {
 			Date date = new Date();
 			String sDate = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL, Locale.FRANCE).format(date);

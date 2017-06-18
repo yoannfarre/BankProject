@@ -58,11 +58,17 @@ public abstract class AbstractWriter {
 	}
 	
 	public String getFileOutputPrimaryPath() {
-		
+
 		String fs = System.getProperty("file.separator");
-		String dirPath = System.getProperty("user.dir") + fs + "tmp" + fs + "bank" + fs + "output" + fs;
+		String os = System.getProperty("os.name");
+		String dirPath;
+		if (os.substring(0, 7).toLowerCase().equals("windows")) {
+			dirPath = "C:" + fs + "tmp" + fs + "bank" + fs + "output" + fs;
+		} else {
+			dirPath = fs + "tmp" + fs + "bank" + fs + "output" + fs;
+		}
 		return dirPath;
-		
+
 	}
 	
 	public String writeFirstLine(){
